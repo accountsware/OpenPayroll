@@ -15,4 +15,5 @@ Microsoft Sql 2005 Express Edition
 
 
 copyright (C) 2013 kurnia.wirawan@gmail.com
+https://twitter.com/kurniawirawan
 
