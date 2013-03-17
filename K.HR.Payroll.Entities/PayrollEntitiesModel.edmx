@@ -1,0 +1,462 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="PayrollModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="PayrollModelStoreContainer">
+          <EntitySet Name="Cities" EntityType="PayrollModel.Store.Cities" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Employees" EntityType="PayrollModel.Store.Employees" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PayrollGroup" EntityType="PayrollModel.Store.PayrollGroup" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PayrollItem" EntityType="PayrollModel.Store.PayrollItem" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PayrollTransaction" EntityType="PayrollModel.Store.PayrollTransaction" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Position" EntityType="PayrollModel.Store.Position" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_PayrollItem_PayrollGroup" Association="PayrollModel.Store.FK_PayrollItem_PayrollGroup">
+            <End Role="PayrollGroup" EntitySet="PayrollGroup" />
+            <End Role="PayrollItem" EntitySet="PayrollItem" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Cities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="RowVersion" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="RowStatus" Type="tinyint" Nullable="false" />
+          <Property Name="CityName" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="CreatedBy" Type="varchar" Nullable="false" MaxLength="24" />
+          <Property Name="CreatedDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="24" />
+          <Property Name="ModifiedDate" Type="smalldatetime" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="RowVersion" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="RowStatus" Type="tinyint" Nullable="false" />
+          <Property Name="NationalIDNumber" Type="varchar" Nullable="false" MaxLength="32" />
+          <Property Name="EmployeeID" Type="varchar" Nullable="false" MaxLength="24" />
+          <Property Name="FirstName" Type="varchar" Nullable="false" MaxLength="24" />
+          <Property Name="MiddleName" Type="varchar" Nullable="false" MaxLength="12" />
+          <Property Name="LastName" Type="varchar" Nullable="false" MaxLength="24" />
+          <Property Name="Title" Type="varchar" Nullable="false" MaxLength="6" />
+          <Property Name="PositionName" Type="varchar" Nullable="false" MaxLength="64" />
+          <Property Name="BirthDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="Gender" Type="varchar" Nullable="false" MaxLength="12" />
+          <Property Name="HiredDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="MaritalStatus" Type="varchar" Nullable="false" MaxLength="24" />
+          <Property Name="Address" Type="varchar" Nullable="false" MaxLength="64" />
+          <Property Name="City" Type="varchar" Nullable="false" MaxLength="64" />
+          <Property Name="State" Type="varchar" Nullable="false" MaxLength="64" />
+          <Property Name="PostalCode" Type="char" Nullable="false" MaxLength="5" />
+          <Property Name="BankName" Type="varchar" Nullable="false" MaxLength="64" />
+          <Property Name="BankAccount" Type="varchar" Nullable="false" MaxLength="24" />
+          <Property Name="PayrollGroupCode" Type="char" Nullable="false" MaxLength="3" />
+          <Property Name="IsTerminate" Type="bit" Nullable="false" />
+          <Property Name="TerminateDate" Type="smalldatetime" />
+          <Property Name="TerminateDescription" Type="varchar(max)" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" Nullable="false" MaxLength="24" />
+          <Property Name="CreatedDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="24" />
+          <Property Name="ModifiedDate" Type="smalldatetime" />
+        </EntityType>
+        <EntityType Name="PayrollGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="RowVersion" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="RowStatus" Type="tinyint" Nullable="false" />
+          <Property Name="Code" Type="char" Nullable="false" MaxLength="3" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="64" />
+          <Property Name="Type" Type="char" Nullable="false" MaxLength="2" />
+          <Property Name="Basic" Type="decimal" Nullable="false" Scale="2" />
+          <Property Name="Unit" Type="tinyint" Nullable="false" />
+          <Property Name="StartDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="EndDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="CreatedBy" Type="varchar" Nullable="false" MaxLength="24" />
+          <Property Name="CreatedDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="24" />
+          <Property Name="ModifiedDate" Type="smalldatetime" />
+        </EntityType>
+        <EntityType Name="PayrollItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="RowVersion" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="RowStatus" Type="tinyint" Nullable="false" />
+          <Property Name="PayrolGroupId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="64" />
+          <Property Name="ItemType" Type="char" Nullable="false" MaxLength="2" />
+          <Property Name="Type" Type="char" Nullable="false" MaxLength="2" />
+          <Property Name="Value" Type="decimal" Nullable="false" Scale="2" />
+          <Property Name="Unit" Type="decimal" Nullable="false" Precision="6" Scale="2" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="CreatedBy" Type="varchar" Nullable="false" MaxLength="24" />
+          <Property Name="CreatedDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="24" />
+          <Property Name="ModifiedDate" Type="smalldatetime" />
+        </EntityType>
+        <EntityType Name="PayrollTransaction">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="RowVersion" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="RowStatus" Type="tinyint" Nullable="false" />
+          <Property Name="ProcessDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="ProcessBy" Type="varchar" Nullable="false" MaxLength="24" />
+          <Property Name="PrintDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="PrintBy" Type="varchar" Nullable="false" MaxLength="24" />
+          <Property Name="PrintCount" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="64" />
+          <Property Name="Value" Type="decimal" Nullable="false" Scale="2" />
+          <Property Name="IsDeduction" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" Nullable="false" MaxLength="24" />
+          <Property Name="CreatedDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="24" />
+          <Property Name="ModifiedDate" Type="smalldatetime" />
+        </EntityType>
+        <EntityType Name="Position">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="RowVersion" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="RowStatus" Type="tinyint" Nullable="false" />
+          <Property Name="PositionName" Type="varchar" Nullable="false" MaxLength="64" />
+          <Property Name="CreatedBy" Type="varchar" Nullable="false" MaxLength="24" />
+          <Property Name="CreatedDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="24" />
+          <Property Name="ModifiedDate" Type="smalldatetime" />
+        </EntityType>
+        <Association Name="FK_PayrollItem_PayrollGroup">
+          <End Role="PayrollGroup" Type="PayrollModel.Store.PayrollGroup" Multiplicity="1" />
+          <End Role="PayrollItem" Type="PayrollModel.Store.PayrollItem" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="PayrollGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PayrollItem">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PayrollModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="kk_sp_payrollEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Employees" EntityType="PayrollModel.Employee" />
+          <EntitySet Name="Positions" EntityType="PayrollModel.Position" />
+          <EntitySet Name="PayrollGroups" EntityType="PayrollModel.PayrollGroup" />
+          <EntitySet Name="PayrollItems" EntityType="PayrollModel.PayrollItem" />
+          <EntitySet Name="PayrollTransactions" EntityType="PayrollModel.PayrollTransaction" />
+          <AssociationSet Name="FK_PayrollItem_PayrollGroup" Association="PayrollModel.FK_PayrollItem_PayrollGroup">
+            <End Role="PayrollGroup" EntitySet="PayrollGroups" />
+            <End Role="PayrollItem" EntitySet="PayrollItems" />
+          </AssociationSet>
+          <EntitySet Name="Cities" EntityType="PayrollModel.City" />
+        </EntityContainer>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="RowStatus" Type="Byte" Nullable="false" />
+          <Property Name="NationalIDNumber" Type="String" Nullable="false" MaxLength="32" Unicode="false" FixedLength="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="24" Unicode="false" FixedLength="false" />
+          <Property Name="MiddleName" Type="String" Nullable="false" MaxLength="12" Unicode="false" FixedLength="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="24" Unicode="false" FixedLength="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="6" Unicode="false" FixedLength="false" />
+          <Property Name="PositionName" Type="String" Nullable="false" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="BirthDate" Type="DateTime" Nullable="false" />
+          <Property Name="Gender" Type="String" Nullable="false" MaxLength="12" Unicode="false" FixedLength="false" />
+          <Property Name="HiredDate" Type="DateTime" Nullable="false" />
+          <Property Name="MaritalStatus" Type="String" Nullable="false" MaxLength="24" Unicode="false" FixedLength="false" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="State" Type="String" Nullable="false" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="PostalCode" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="true" />
+          <Property Name="BankName" Type="String" Nullable="false" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="BankAccount" Type="String" Nullable="false" MaxLength="24" Unicode="false" FixedLength="false" />
+          <Property Name="PayrollGroupCode" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="24" Unicode="false" FixedLength="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="24" Unicode="false" FixedLength="false" />
+          <Property Name="ModifiedDate" Type="DateTime" />
+          <Property Type="String" Name="EmployeeID" Nullable="false" MaxLength="24" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="IsTerminate" Nullable="false" />
+          <Property Type="DateTime" Name="TerminateDate" />
+          <Property Type="String" Name="TerminateDescription" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Position">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="RowStatus" Type="Byte" Nullable="false" />
+          <Property Name="PositionName" Type="String" Nullable="false" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="24" Unicode="false" FixedLength="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="24" Unicode="false" FixedLength="false" />
+          <Property Name="ModifiedDate" Type="DateTime" />
+        </EntityType>
+        <EntityType Name="PayrollGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Binary" Name="RowVersion" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Type="Byte" Name="RowStatus" Nullable="false" />
+          <Property Type="String" Name="Code" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Type" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Type="Decimal" Name="Basic" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Byte" Name="Unit" Nullable="false" />
+          <Property Type="DateTime" Name="StartDate" Nullable="false" />
+          <Property Type="DateTime" Name="EndDate" Nullable="false" />
+          <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="24" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="false" />
+          <Property Type="String" Name="ModifiedBy" MaxLength="24" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="ModifiedDate" />
+          <NavigationProperty Name="PayrollItem" Relationship="PayrollModel.FK_PayrollItem_PayrollGroup" FromRole="PayrollGroup" ToRole="PayrollItem" />
+        </EntityType>
+        <EntityType Name="PayrollItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Binary" Name="RowVersion" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Type="Byte" Name="RowStatus" Nullable="false" />
+          <Property Type="Int32" Name="PayrolGroupId" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ItemType" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="Type" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Type="Decimal" Name="Value" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Unit" Nullable="false" Precision="6" Scale="2" />
+          <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="24" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="false" />
+          <Property Type="String" Name="ModifiedBy" MaxLength="24" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="ModifiedDate" />
+          <NavigationProperty Name="PayrollGroup" Relationship="PayrollModel.FK_PayrollItem_PayrollGroup" FromRole="PayrollItem" ToRole="PayrollGroup" />
+        </EntityType>
+        <EntityType Name="PayrollTransaction">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Binary" Name="RowVersion" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Type="Byte" Name="RowStatus" Nullable="false" />
+          <Property Type="DateTime" Name="ProcessDate" Nullable="false" />
+          <Property Type="String" Name="ProcessBy" Nullable="false" MaxLength="24" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="PrintDate" Nullable="false" />
+          <Property Type="String" Name="PrintBy" Nullable="false" MaxLength="24" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="PrintCount" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="Value" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Boolean" Name="IsDeduction" Nullable="false" />
+          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="24" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="false" />
+          <Property Type="String" Name="ModifiedBy" MaxLength="24" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="ModifiedDate" />
+        </EntityType>
+        <Association Name="FK_PayrollItem_PayrollGroup">
+          <End Type="PayrollModel.PayrollGroup" Role="PayrollGroup" Multiplicity="1" />
+          <End Type="PayrollModel.PayrollItem" Role="PayrollItem" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="PayrollGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PayrollItem">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Binary" Name="RowVersion" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Type="Byte" Name="RowStatus" Nullable="false" />
+          <Property Type="String" Name="CityName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="24" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="false" />
+          <Property Type="String" Name="ModifiedBy" MaxLength="24" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="ModifiedDate" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PayrollModelStoreContainer" CdmEntityContainer="kk_sp_payrollEntities">
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="PayrollModel.Employee">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="TerminateDescription" ColumnName="TerminateDescription" />
+                <ScalarProperty Name="TerminateDate" ColumnName="TerminateDate" />
+                <ScalarProperty Name="IsTerminate" ColumnName="IsTerminate" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="NationalIDNumber" ColumnName="NationalIDNumber" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="PositionName" ColumnName="PositionName" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="HiredDate" ColumnName="HiredDate" />
+                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="BankName" ColumnName="BankName" />
+                <ScalarProperty Name="BankAccount" ColumnName="BankAccount" />
+                <ScalarProperty Name="PayrollGroupCode" ColumnName="PayrollGroupCode" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Positions">
+            <EntityTypeMapping TypeName="PayrollModel.Position">
+              <MappingFragment StoreEntitySet="Position">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="PositionName" ColumnName="PositionName" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PayrollGroups">
+            <EntityTypeMapping TypeName="PayrollModel.PayrollGroup">
+              <MappingFragment StoreEntitySet="PayrollGroup">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="Basic" ColumnName="Basic" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PayrollItems">
+            <EntityTypeMapping TypeName="PayrollModel.PayrollItem">
+              <MappingFragment StoreEntitySet="PayrollItem">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="ItemType" ColumnName="ItemType" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PayrolGroupId" ColumnName="PayrolGroupId" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PayrollTransactions">
+            <EntityTypeMapping TypeName="PayrollModel.PayrollTransaction">
+              <MappingFragment StoreEntitySet="PayrollTransaction">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsDeduction" ColumnName="IsDeduction" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PrintCount" ColumnName="PrintCount" />
+                <ScalarProperty Name="PrintBy" ColumnName="PrintBy" />
+                <ScalarProperty Name="PrintDate" ColumnName="PrintDate" />
+                <ScalarProperty Name="ProcessBy" ColumnName="ProcessBy" />
+                <ScalarProperty Name="ProcessDate" ColumnName="ProcessDate" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cities">
+            <EntityTypeMapping TypeName="PayrollModel.City">
+              <MappingFragment StoreEntitySet="Cities">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="PayrollEntitiesModel" ZoomLevel="58">
+        <EntityTypeShape EntityType="PayrollModel.Employee" Width="1.5" PointX="0.75" PointY="0.75" Height="5.634013671875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayrollModel.Position" Width="1.5" PointX="2.75" PointY="0.75" Height="2.5571907552083326" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayrollModel.PayrollGroup" Width="1.5" PointX="3.375" PointY="5" Height="4.0956022135416648" />
+        <EntityTypeShape EntityType="PayrollModel.PayrollItem" Width="1.5" PointX="5.625" PointY="5.125" Height="3.9033007812499996" />
+        <EntityTypeShape EntityType="PayrollModel.PayrollTransaction" Width="1.5" PointX="8.375" PointY="0.75" Height="3.9033007812499996" />
+        <AssociationConnector Association="PayrollModel.FK_PayrollItem_PayrollGroup" >
+          <ConnectorPoint PointX="4.875" PointY="7.076650390625" />
+          <ConnectorPoint PointX="5.625" PointY="7.076650390625" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="PayrollModel.City" Width="1.5" PointX="5.375" PointY="0.75" Height="2.5571907552083317" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
