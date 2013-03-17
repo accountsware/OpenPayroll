@@ -1,0 +1,9 @@
+﻿ALPHA 1.0.0
+-	Type Salary dibagi menjadi 2 (DEFAULT = DE)
+	1.	FULL-MONTH : Salary Per Bulan dengan Unit 1 (DE)
+	2.	TIME-BASE : Salary dengan unit >= 1 (TI)
+-	Type Tunjangan & Potongan
+	1.	BASE-ON-VALUE : Only get Value from Table Value (DE)
+	2.	PERCENTAGE-VALUE : Value Get Form Percentage Unit * Value (PE)
+	3.	UNIT-VALUE : Value Get Form Unit (Ussually Day) * Value (UN)
+-	Item Type is treatment Allowance(DE) & Deductions (DC)

@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7D731242-96B7-4407-9130-A02056C6DD59}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>K.HR.Payroll.Core</RootNamespace>
+    <AssemblyName>K.HR.Payroll.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseCore.cs" />
+    <Compile Include="CityCore.cs" />
+    <Compile Include="EmployeeCore.cs" />
+    <Compile Include="PayrollGroupCore.cs" />
+    <Compile Include="PayrollItem.cs" />
+    <Compile Include="PositionCore.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\K.Common\K.Common.csproj">
+      <Project>{79E8C424-2E71-403F-9764-E37E5040D385}</Project>
+      <Name>K.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\K.HR.Payroll.DataRepository\K.HR.Payroll.DataRepository.csproj">
+      <Project>{34E4D672-9AD6-480F-984A-0AEBB4169EDD}</Project>
+      <Name>K.HR.Payroll.DataRepository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\K.HR.Payroll.Entities\K.HR.Payroll.Entities.csproj">
+      <Project>{44FFB3D7-BE81-477A-B4B8-9961ECAA688B}</Project>
+      <Name>K.HR.Payroll.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\K.HR.Payroll.Model.Interfaces\K.HR.Payroll.Model.Interfaces.csproj">
+      <Project>{92CB477F-D68E-4301-95F4-E0D91F4537E5}</Project>
+      <Name>K.HR.Payroll.Model.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\K.HR.Payroll.Model\K.HR.Payroll.Model.csproj">
+      <Project>{0BC21B62-6A44-4A01-8056-DFA5FAA6F34D}</Project>
+      <Name>K.HR.Payroll.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

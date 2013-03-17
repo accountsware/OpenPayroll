@@ -107,7 +107,7 @@ namespace K.HR.Payroll.DataRepository
 
 		public abstract int Delete(int id);
 
-		public abstract IEnumerable<IBaseModel> Get(params WhereTerm[] parameter);
+		public abstract IEnumerable<IBaseModel> Get(params IListParameter[] parameter);
 
 		public abstract IEnumerable<IBaseModel> Get(int start, int limit, string sort, string dir, out int totalCount,
 		                                            params IListParameter[] parameter);

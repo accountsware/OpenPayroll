@@ -1,0 +1,203 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0AB9180F-6FAA-4CC7-96D4-C361881C8D62}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>K.Common.UI</RootNamespace>
+    <AssemblyName>K.Common.UI</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ListViewPrinter">
+      <HintPath>..\99. Assembly Reference\ListViewPrinter.dll</HintPath>
+    </Reference>
+    <Reference Include="ObjectListView">
+      <HintPath>..\99. Assembly Reference\ObjectListView.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Forms\BlankForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\BlankForm.Designer.cs">
+      <DependentUpon>BlankForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\EditorBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EditorBase.Designer.cs">
+      <DependentUpon>EditorBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\KDateTimePicker.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\KDateTimePicker.Designer.cs">
+      <DependentUpon>KDateTimePicker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\KDualDatePicker.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\KDualDatePicker.designer.cs">
+      <DependentUpon>KDualDatePicker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ListParameterBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ListParameterBase.Designer.cs">
+      <DependentUpon>ListParameterBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\KCheckBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\KCheckBox.Designer.cs">
+      <DependentUpon>KCheckBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\KLookupBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\KLookupBase.designer.cs">
+      <DependentUpon>KLookupBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\KLookupTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\KLookupTextBox.designer.cs">
+      <DependentUpon>KLookupTextBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\KNumericTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\KNumericTextBox.Designer.cs">
+      <DependentUpon>KNumericTextBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\OnListViewItemSelectedItemArgs.cs" />
+    <Compile Include="Forms\KComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\KComboBox.Designer.cs">
+      <DependentUpon>KComboBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\KTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\KTextBox.Designer.cs">
+      <DependentUpon>KTextBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\MsgHelpers.cs" />
+    <Compile Include="Panels\DetailPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Panels\DetailPanel.Designer.cs">
+      <DependentUpon>DetailPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\MaintainBaseControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Panels\MaintainBaseControl.Designer.cs">
+      <DependentUpon>MaintainBaseControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Patterns\ICommand.cs" />
+    <Compile Include="Patterns\IMainConfiguration.cs" />
+    <Compile Include="Patterns\IMaintainData.cs" />
+    <Compile Include="Patterns\TreeNodeCommand.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Forms\BlankForm.resx">
+      <DependentUpon>BlankForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EditorBase.resx">
+      <DependentUpon>EditorBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\KDualDatePicker.resx">
+      <DependentUpon>KDualDatePicker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ListParameterBase.resx">
+      <DependentUpon>ListParameterBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\KLookupBase.resx">
+      <DependentUpon>KLookupBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\KLookupTextBox.resx">
+      <DependentUpon>KLookupTextBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\DetailPanel.resx">
+      <DependentUpon>DetailPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\MaintainBaseControl.resx">
+      <DependentUpon>MaintainBaseControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\K.Common\K.Common.csproj">
+      <Project>{79E8C424-2E71-403F-9764-E37E5040D385}</Project>
+      <Name>K.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\K.HR.Payroll.Core\K.HR.Payroll.Core.csproj">
+      <Project>{7D731242-96B7-4407-9130-A02056C6DD59}</Project>
+      <Name>K.HR.Payroll.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -5,6 +5,7 @@ using K.Common.Data;
 using K.Common.Patterns;
 using K.HR.Payroll.Entities;
 using K.HR.Payroll.Model;
+using K.HR.Payroll.Model.Interfaces;
 
 namespace K.HR.Payroll.DataRepository
 {
@@ -89,7 +90,7 @@ namespace K.HR.Payroll.DataRepository
             };
         }
 
-        public override IEnumerable<IBaseModel> Get(params WhereTerm[] parameter)
+		public override IEnumerable<IBaseModel> Get(params IListParameter[] parameter)
         {
             var whereterm = GetQueryParameterLinq(parameter);
             var query = (from a in Entities.Cities select a).Where(whereterm, ListValue.ToArray()).ToList();

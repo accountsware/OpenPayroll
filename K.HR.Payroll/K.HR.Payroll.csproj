@@ -1,0 +1,269 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{27CEDA0D-FE2F-40FB-B31C-8AEB9A0F130D}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>K.HR.Payroll</RootNamespace>
+    <AssemblyName>K.HR.Payroll</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\K.HR.Payroll.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\K.HR.Payroll.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ObjectListView">
+      <HintPath>..\99. Assembly Reference\ObjectListView.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Command\Payroll\CityCommand.cs" />
+    <Compile Include="Command\Payroll\EmployeeCommand.cs" />
+    <Compile Include="Command\Payroll\PayrollGroupCommand.cs" />
+    <Compile Include="Command\Payroll\PositionCommand.cs" />
+    <Compile Include="Command\TreeMenu.cs" />
+    <Compile Include="Helpers\RegisteredObject.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Master\Cities\CityEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Master\Cities\CityEditor.Designer.cs">
+      <DependentUpon>CityEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Master\Cities\CityMaintain.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Master\Cities\CityMaintain.Designer.cs">
+      <DependentUpon>CityMaintain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Master\Cities\CityParameterList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Master\Cities\CityParameterList.Designer.cs">
+      <DependentUpon>CityParameterList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Master\Employees\EmployeeEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Master\Employees\EmployeeEditor.Designer.cs">
+      <DependentUpon>EmployeeEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Master\Employees\EmployeeMaintain.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Master\Employees\EmployeeMaintain.Designer.cs">
+      <DependentUpon>EmployeeMaintain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Master\Employees\EmployeeParameterList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Master\Employees\EmployeeParameterList.Designer.cs">
+      <DependentUpon>EmployeeParameterList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Master\PayrollGroup\PayrollGroupEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Master\PayrollGroup\PayrollGroupEditor.Designer.cs">
+      <DependentUpon>PayrollGroupEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Master\PayrollGroup\PayrollGroupMaintain.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Master\PayrollGroup\PayrollGroupMaintain.Designer.cs">
+      <DependentUpon>PayrollGroupMaintain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Master\PayrollGroup\PayrollGroupParameterList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Master\PayrollGroup\PayrollGroupParameterList.Designer.cs">
+      <DependentUpon>PayrollGroupParameterList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Master\Position\PositionEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Master\Position\PositionEditor.Designer.cs">
+      <DependentUpon>PositionEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Master\Position\PositionMaintain.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Master\Position\PositionMaintain.Designer.cs">
+      <DependentUpon>PositionMaintain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Master\Position\PositionParameterList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Master\Position\PositionParameterList.Designer.cs">
+      <DependentUpon>PositionParameterList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Master\Cities\CityEditor.resx">
+      <DependentUpon>CityEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Master\Cities\CityMaintain.resx">
+      <DependentUpon>CityMaintain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Master\Employees\EmployeeEditor.resx">
+      <DependentUpon>EmployeeEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Master\Employees\EmployeeMaintain.resx">
+      <DependentUpon>EmployeeMaintain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Master\Employees\EmployeeParameterList.resx">
+      <DependentUpon>EmployeeParameterList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Master\PayrollGroup\PayrollGroupEditor.resx">
+      <DependentUpon>PayrollGroupEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Master\PayrollGroup\PayrollGroupMaintain.resx">
+      <DependentUpon>PayrollGroupMaintain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Master\Position\PositionEditor.resx">
+      <DependentUpon>PositionEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Master\Position\PositionMaintain.resx">
+      <DependentUpon>PositionMaintain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Master\Position\PositionParameterList.resx">
+      <DependentUpon>PositionParameterList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="App.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\K.Common.UI\K.Common.UI.csproj">
+      <Project>{0AB9180F-6FAA-4CC7-96D4-C361881C8D62}</Project>
+      <Name>K.Common.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\K.Common\K.Common.csproj">
+      <Project>{79E8C424-2E71-403F-9764-E37E5040D385}</Project>
+      <Name>K.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\K.HR.Payroll.Core\K.HR.Payroll.Core.csproj">
+      <Project>{7D731242-96B7-4407-9130-A02056C6DD59}</Project>
+      <Name>K.HR.Payroll.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\K.HR.Payroll.Model.Interfaces\K.HR.Payroll.Model.Interfaces.csproj">
+      <Project>{92CB477F-D68E-4301-95F4-E0D91F4537E5}</Project>
+      <Name>K.HR.Payroll.Model.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\K.HR.Payroll.Model\K.HR.Payroll.Model.csproj">
+      <Project>{0BC21B62-6A44-4A01-8056-DFA5FAA6F34D}</Project>
+      <Name>K.HR.Payroll.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Documents\PROCESS-MAIN.txt" />
+    <Content Include="Documents\REQ-MAIN.txt" />
+    <Content Include="Documents\RULES-MAIN.txt" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

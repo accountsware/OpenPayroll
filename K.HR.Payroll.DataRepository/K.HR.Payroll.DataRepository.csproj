@@ -69,6 +69,10 @@
       <Project>{44FFB3D7-BE81-477A-B4B8-9961ECAA688B}</Project>
       <Name>K.HR.Payroll.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\K.HR.Payroll.Model.Interfaces\K.HR.Payroll.Model.Interfaces.csproj">
+      <Project>{92CB477F-D68E-4301-95F4-E0D91F4537E5}</Project>
+      <Name>K.HR.Payroll.Model.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\K.HR.Payroll.Model\K.HR.Payroll.Model.csproj">
       <Project>{0BC21B62-6A44-4A01-8056-DFA5FAA6F34D}</Project>
       <Name>K.HR.Payroll.Model</Name>
