@@ -137,12 +137,9 @@ namespace K.Common.UI.Panels
 
 			if (source == null) return;
 			Application.DoEvents();
-			// ReSharper disable PossibleNullReferenceException
 			// TODO SET DATA SOURCE
 			PopulateListView(source);
 		    if (lastButtonNavigator != null) lastButtonNavigator.Enabled = true;
-			// ReSharper restore PossibleNullReferenceException
-			SetPagingEnviroment();
 		}
 
 		/// <summary>

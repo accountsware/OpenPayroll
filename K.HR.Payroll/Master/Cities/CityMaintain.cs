@@ -72,13 +72,12 @@ namespace K.HR.Payroll.Master.Cities
         {
             dataListView1.Items.Clear();
             if (source == null) return;
-            // ReSharper disable PossibleMultipleEnumeration
-            base.PopulateListView(source);
-            var tsource = source.ToList();
+	        var enumerable = source as IList<T> ?? source.ToList();
+	        base.PopulateListView(enumerable);
+            var tsource = enumerable.ToList();
             // TODO CONFIGUREABLE
             dataListView1.AlternateRowBackColor = Color.Khaki;
             dataListView1.DataSource = tsource;
-            // ReSharper restore PossibleMultipleEnumeration
         }
 
         protected override void ButtonFirstClick(object sender, EventArgs e)
