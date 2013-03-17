@@ -1,4 +1,4 @@
-﻿namespace K.Common.Patterns
+﻿namespace K.Common.Interfaces
 {
     public interface IFormConfiguration
     {

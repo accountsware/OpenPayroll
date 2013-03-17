@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
 using K.Common.Data;
+using K.Common.Interfaces;
 using K.Common.Patterns;
 using K.Common.UI.Patterns;
 

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows.Forms;
 using K.Common.Data;
+using K.Common.Interfaces;
 using K.Common.Patterns;
 
 namespace K.Common.UI.Forms

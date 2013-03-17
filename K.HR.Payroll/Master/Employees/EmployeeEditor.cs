@@ -105,8 +105,16 @@ namespace K.HR.Payroll.Master.Employees
             var employee = PopulateEmployeeModelFromInterface();
             using(var facade = new EmployeeCore())
             {
-                facade.Save(employee);
-                ShowMessage(facade);
+				try
+				{
+					facade.Save(employee);
+					ShowMessage(facade);
+				}
+				catch (Exception err)
+				{
+					ShowMessage(err);
+				}
+                
             }
         }
 

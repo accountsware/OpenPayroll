@@ -92,6 +92,7 @@
   <ItemGroup>
     <Compile Include="Command\Payroll\CityCommand.cs" />
     <Compile Include="Command\Payroll\EmployeeCommand.cs" />
+    <Compile Include="Command\Payroll\OptionsCommand.cs" />
     <Compile Include="Command\Payroll\PayrollGroupCommand.cs" />
     <Compile Include="Command\Payroll\PositionCommand.cs" />
     <Compile Include="Command\TreeMenu.cs" />

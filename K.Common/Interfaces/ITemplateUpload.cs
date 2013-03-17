@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace K.Common.Patterns
+namespace K.Common.Interfaces
 {
     public interface ITemplateExport
     {

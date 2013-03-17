@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using K.Common.Patterns;
 
-namespace K.Common.Patterns
+namespace K.Common.Interfaces
 {
     public interface IDataPaging : IDisposable
     {

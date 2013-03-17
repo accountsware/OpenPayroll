@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using K.Common.Interfaces;
 using K.Common.Patterns;
 using K.HR.Payroll.DataRepository;
 using K.HR.Payroll.Model.Interfaces;
@@ -38,8 +39,7 @@ namespace K.HR.Payroll.Core
 				Repository.Delete(id);
 			}
         }
-
-
+		
 		public IEnumerable<T> Get<T>(params IListParameter[] parameter)
         {
 			using (Repository = new CityRepository())

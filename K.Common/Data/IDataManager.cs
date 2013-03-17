@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using K.Common.Interfaces;
 using K.Common.Patterns;
 
 namespace K.Common.Data

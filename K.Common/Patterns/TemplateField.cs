@@ -1,4 +1,5 @@
 ﻿using K.Common.Data;
+using K.Common.Interfaces;
 
 namespace K.Common.Patterns
 {

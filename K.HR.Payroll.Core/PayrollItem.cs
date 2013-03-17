@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using K.Common;
 using K.Common.Data;
+using K.Common.Interfaces;
 using K.Common.Patterns;
 using K.HR.Payroll.DataRepository;
 using K.HR.Payroll.Model;

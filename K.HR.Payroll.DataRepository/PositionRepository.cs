@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using K.Common.Data;
+using K.Common.Interfaces;
 using K.Common.Patterns;
 using K.HR.Payroll.Entities;
 using K.HR.Payroll.Model;

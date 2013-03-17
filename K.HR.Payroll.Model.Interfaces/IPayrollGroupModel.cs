@@ -1,4 +1,5 @@
 ﻿using System;
+using K.Common.Interfaces;
 using K.Common.Patterns;
 
 namespace K.HR.Payroll.Model.Interfaces

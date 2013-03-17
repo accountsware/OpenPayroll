@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using K.Common.Data;
 using K.Common.Helpers;
+using K.Common.Interfaces;
 using K.Common.Patterns;
 using K.HR.Payroll.Entities;
 

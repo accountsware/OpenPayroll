@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using K.Common.Data;
+using K.Common.Interfaces;
 
 namespace K.Common.Patterns
 {

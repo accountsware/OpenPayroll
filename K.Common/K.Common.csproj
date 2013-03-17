@@ -51,19 +51,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\ClassFactory.cs" />
-    <Compile Include="Data\DynamicClass.cs" />
-    <Compile Include="Data\DynamicExpression.cs" />
-    <Compile Include="Data\DynamicOrdering.cs" />
-    <Compile Include="Data\DynamicProperty.cs" />
-    <Compile Include="Data\DynamicQueryable.cs" />
+    <Compile Include="Patterns\Dynamic.cs" />
     <Compile Include="Data\EnumParamterDataTypes.cs" />
-    <Compile Include="Data\ExpressionParser.cs" />
     <Compile Include="Data\IDataManager.cs" />
     <Compile Include="Data\JsonReturnBase.cs" />
-    <Compile Include="Data\ParseException.cs" />
-    <Compile Include="Data\Res.cs" />
-    <Compile Include="Data\Signature.cs" />
     <Compile Include="Data\SqlOperator.cs" />
     <Compile Include="Data\WhereTerm.cs" />
     <Compile Include="Helpers\ConfigurationHelpers.cs" />
@@ -73,14 +64,14 @@
     <Compile Include="Helpers\ExceptionHelpers.cs" />
     <Compile Include="OnErrorArgs.cs" />
     <Compile Include="Patterns\DefaultValue.cs" />
-    <Compile Include="Patterns\IBaseModel.cs" />
-    <Compile Include="Patterns\IDataPaging.cs" />
-    <Compile Include="Patterns\IFormConfiguration.cs" />
-    <Compile Include="Patterns\IListParameter.cs" />
-    <Compile Include="Patterns\IListRangeParameter.cs" />
-    <Compile Include="Patterns\ILookup.cs" />
-    <Compile Include="Patterns\ITemplateField.cs" />
-    <Compile Include="Patterns\ITemplateUpload.cs" />
+    <Compile Include="Interfaces\IBaseModel.cs" />
+    <Compile Include="Interfaces\IDataPaging.cs" />
+    <Compile Include="Interfaces\IFormConfiguration.cs" />
+    <Compile Include="Interfaces\IListParameter.cs" />
+    <Compile Include="Interfaces\IListRangeParameter.cs" />
+    <Compile Include="Interfaces\ILookup.cs" />
+    <Compile Include="Interfaces\ITemplateField.cs" />
+    <Compile Include="Interfaces\ITemplateUpload.cs" />
     <Compile Include="Patterns\TemplateField.cs" />
     <Compile Include="Patterns\TemplateUploadBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

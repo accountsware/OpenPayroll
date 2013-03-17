@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace K.Common.Patterns
+namespace K.Common.Interfaces
 {
     public interface ILookup
     {

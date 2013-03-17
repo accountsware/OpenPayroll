@@ -1,4 +1,5 @@
 ﻿using K.Common.Data;
+using K.Common.Interfaces;
 using K.Common.Patterns;
 using K.Common.UI.Forms;
 using K.Common.UI.Patterns;
