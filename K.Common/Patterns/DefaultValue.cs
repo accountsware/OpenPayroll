@@ -4,6 +4,8 @@ namespace K.Common.Patterns
 {
     public static class DefaultValue
     {
+		public const string DEFAULT_NEW_LINE_WEB = "<br/>";
+		public const string DEFAULT_NEW_LINE_CONSOLE = "\n";
         public const string SQL_DATE_FORMAT = "yyyy-MM-dd hh:mm:ss";
         public const string DOT = ".";
         public const string LOGICAL_SQL = " AND ";
