@@ -27,7 +27,7 @@ namespace K.HR.Payroll.Master.Cities
         public override void RefreshList()
         {
             base.RefreshList();
-            using (DataManager = new CityCore())
+            using (DataManager = new CityModuleCore())
             {
                 BindDataSource<ICityModel>();
             }
@@ -116,7 +116,7 @@ namespace K.HR.Payroll.Master.Cities
             if (e.ColumnToSort == null) return;
             SortColumn = e.ColumnToSort.AspectName;
             SortDirection = GetSort(e.SortOrder);
-            using (DataManager = new EmployeeCore())
+            using (DataManager = new EmployeeModuleCore())
             {
                 BindDataSource<IEmployeeModel>();
             }

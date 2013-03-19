@@ -44,7 +44,7 @@ namespace K.Common.UI.Panels
 		
         public int Index { get; set; }
         public IMainConfiguration CurrentMainForm { get; set; }
-		protected BaseCore DataManager { get; set; }
+		protected PayrollModuleCore DataManager { get; set; }
 		protected int CurrentPageIndex { get; set; }
 		public int TotalIndex { get; set; }
 		public ListParameterBase FormParameter { get; set; }
@@ -109,10 +109,10 @@ namespace K.Common.UI.Panels
 			OpenItem();
 		}
 
-		void DataManager_ErrorEventHandler(object sender, OnErrorArgs e)
-		{
-			MsgHelpers.ShowError(this, e.CException.Message);
-		}
+		//void DataManager_ErrorEventHandler(object sender, OnErrorArgs e)
+		//{
+		//    MsgHelpers.ShowError(this, e.CException.Message);
+		//}
 
         public void SetTitle(string title)
         {
@@ -132,7 +132,7 @@ namespace K.Common.UI.Panels
 				MsgHelpers.ShowError(CMainForm, "Error", " paging manager is not initialized");
 				return;
 			}
-			DataManager.ErrorEventHandler += DataManager_ErrorEventHandler;
+			//DataManager.ErrorEventHandler += DataManager_ErrorEventHandler;
 			var source = PopulateDataSource<T>();
 
 			if (source == null) return;

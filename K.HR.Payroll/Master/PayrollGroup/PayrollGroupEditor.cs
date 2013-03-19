@@ -91,7 +91,7 @@ namespace K.HR.Payroll.Master.PayrollGroup
 		{
 		    base.Save();
 		    var payrollgroup = PopulatePayrollGroupModelFromInterface();
-		    using (var facade = new PayrollGroupCore())
+		    using (var facade = new PayrollGroupModuleCore())
 		    {
 				// TODO SAVE TRANSACTION
 				//facade.Save(payrollgroup);
@@ -101,7 +101,7 @@ namespace K.HR.Payroll.Master.PayrollGroup
 		}
 
         protected void SaveDetail(int parentId) {
-            var facade = new PayrollItemCore();
+            var facade = new PayrollItemModuleCore();
             if (objectListView1.Items.Count <= 0) return;
             for (int i = 0; i < objectListView1.Items.Count; i++ )
             {
@@ -120,7 +120,7 @@ namespace K.HR.Payroll.Master.PayrollGroup
             payrollGroup.Id = Convert.ToInt32(recordId.Text);
             payrollGroup.ModifiedBy = "";
             payrollGroup.ModifiedDate = DateTime.Now;
-		    using (var facade = new EmployeeCore())
+		    using (var facade = new EmployeeModuleCore())
 		    {
 				// TODO SAVE ACTION
 				//facade.Update(payrollGroup);

@@ -33,7 +33,7 @@ namespace K.HR.Payroll.Master.Position
 
 		private void PopulateInterfaceFromModel(int id)
 		{
-			using (var facade = new PositionCore())
+			using (var facade = new PositionModuleCore())
 			{
 				var positionModel = facade.Get<IPositionModel>(WhereTerm.DefaultParam(id, "ID")).FirstOrDefault();
 				if (positionModel == null || !facade.IsSuccess)
@@ -69,7 +69,7 @@ namespace K.HR.Payroll.Master.Position
 		{
 			base.Save();
 			var positionModel = PopulateModelFromInterface();
-			using (var facade = new PositionCore())
+			using (var facade = new PositionModuleCore())
 			{
 				facade.Save(positionModel);
 				ShowMessage(facade);
@@ -83,7 +83,7 @@ namespace K.HR.Payroll.Master.Position
 			positionModel.Id = Convert.ToInt32(recordId.Text);
 			positionModel.ModifiedBy = modifiedBy.Text;
 			positionModel.ModifiedDate = modifiedDate.Value;
-			using (var facade = new PositionCore())
+			using (var facade = new PositionModuleCore())
 			{
 				facade.Update(positionModel);
 				ShowMessage(facade);
@@ -94,7 +94,7 @@ namespace K.HR.Payroll.Master.Position
 		{
 			base.DeleteRecord();
 			var id = Convert.ToInt32(recordId.Text);
-			using (var facade = new PositionCore())
+			using (var facade = new PositionModuleCore())
 			{
 				facade.Delete(id);
 				ShowMessage(facade);

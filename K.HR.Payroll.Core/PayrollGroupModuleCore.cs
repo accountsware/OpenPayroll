@@ -11,9 +11,9 @@ using K.HR.Payroll.Model.Interfaces;
 
 namespace K.HR.Payroll.Core
 {
-	public class PayrollGroupCore : BaseCore
+	public class PayrollGroupModuleCore : PayrollModuleCore
 	{
-		public PayrollGroupCore()
+		public PayrollGroupModuleCore()
 		{
 			ObjectName = "PayrollGroup";
 		}

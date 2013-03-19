@@ -6,9 +6,9 @@ using K.HR.Payroll.Model.Interfaces;
 
 namespace K.HR.Payroll.Core
 {
-	public class CityCore : BaseCore
+	public class CityModuleCore : PayrollModuleCore
 	{
-        public CityCore()
+        public CityModuleCore()
         {
             ObjectName = "Cities";
         }

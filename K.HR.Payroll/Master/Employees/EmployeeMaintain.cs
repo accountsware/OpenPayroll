@@ -23,7 +23,7 @@ namespace K.HR.Payroll.Master.Employees
 		public override void RefreshList()
         {
             base.RefreshList();
-            using (DataManager = new EmployeeCore())
+            using (DataManager = new EmployeeModuleCore())
             {
                 BindDataSource<IEmployeeModel>();
             }
@@ -112,7 +112,7 @@ namespace K.HR.Payroll.Master.Employees
             if (e.ColumnToSort == null) return;
             SortColumn = e.ColumnToSort.AspectName;
             SortDirection = GetSort(e.SortOrder);
-            using (DataManager = new EmployeeCore())
+            using (DataManager = new EmployeeModuleCore())
             {
                 BindDataSource<IEmployeeModel>();
             }

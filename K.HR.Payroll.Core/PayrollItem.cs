@@ -12,9 +12,9 @@ using K.HR.Payroll.Model.Interfaces;
 
 namespace K.HR.Payroll.Core
 {
-    public class PayrollItemCore : BaseCore
+    public class PayrollItemModuleCore : PayrollModuleCore
     {
-        public PayrollItemCore()
+        public PayrollItemModuleCore()
         {
             ObjectName = "PayrollItem";
         }

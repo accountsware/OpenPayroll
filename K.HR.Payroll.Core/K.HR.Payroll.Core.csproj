@@ -49,12 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseCore.cs" />
-    <Compile Include="CityCore.cs" />
-    <Compile Include="EmployeeCore.cs" />
-    <Compile Include="PayrollGroupCore.cs" />
+    <Compile Include="PayrollModuleCore.cs" />
+    <Compile Include="CityModuleCore.cs" />
+    <Compile Include="EmployeeModuleCore.cs" />
+    <Compile Include="PayrollGroupModuleCore.cs" />
     <Compile Include="PayrollItem.cs" />
-    <Compile Include="PositionCore.cs" />
+    <Compile Include="PositionModuleCore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

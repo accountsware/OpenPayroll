@@ -39,7 +39,7 @@ namespace K.HR.Payroll.Master.Cities
 
         private void PopulateInterfaceFromModel(int id)
         {
-            using (var facade = new CityCore())
+            using (var facade = new CityModuleCore())
             {
                 var city = facade.Get<ICityModel>(WhereTerm.DefaultParam(id, "ID")).FirstOrDefault();
                 if (city == null || !facade.IsSuccess)
@@ -73,7 +73,7 @@ namespace K.HR.Payroll.Master.Cities
         {
             base.Save();
             var city = PopulateCityModelFromInterface();
-            using (var facade = new CityCore())
+            using (var facade = new CityModuleCore())
             {
                 facade.Save(city);
                 ShowMessage(facade);
@@ -87,7 +87,7 @@ namespace K.HR.Payroll.Master.Cities
             city.Id = Convert.ToInt32(recordId.Text);
             city.ModifiedBy = modifiedBy.Text;
             city.ModifiedDate = modifiedDate.Value;
-            using (var facade = new CityCore())
+            using (var facade = new CityModuleCore())
             {
                 facade.Update(city);
                 ShowMessage(facade);
@@ -98,7 +98,7 @@ namespace K.HR.Payroll.Master.Cities
         {
             base.DeleteRecord();
             var id = Convert.ToInt32(recordId.Text);
-            using (var facade = new CityCore())
+            using (var facade = new CityModuleCore())
             {
                 facade.Delete(id);
                 ShowMessage(facade);

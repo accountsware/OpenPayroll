@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Patterns\AbstractCore.cs" />
     <Compile Include="Patterns\Dynamic.cs" />
     <Compile Include="Data\EnumParamterDataTypes.cs" />
     <Compile Include="Data\IDataManager.cs" />

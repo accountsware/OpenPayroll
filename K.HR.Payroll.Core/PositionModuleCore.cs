@@ -10,10 +10,10 @@ using K.HR.Payroll.Model.Interfaces;
 
 namespace K.HR.Payroll.Core
 {
-	public class PositionCore : BaseCore
+	public class PositionModuleCore : PayrollModuleCore
 	{
 
-		public PositionCore()
+		public PositionModuleCore()
 		{
 			ObjectName = "Employee Position";
 		}

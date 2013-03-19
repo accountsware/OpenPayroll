@@ -24,7 +24,7 @@ namespace K.HR.Payroll.Master.Position
 		public override void RefreshList()
 		{
 			base.RefreshList();
-			using (DataManager = new PositionCore())
+			using (DataManager = new PositionModuleCore())
 			{
 				BindDataSource<IPositionModel>();
 			}
@@ -113,7 +113,7 @@ namespace K.HR.Payroll.Master.Position
 			if (e.ColumnToSort == null) return;
 			SortColumn = e.ColumnToSort.AspectName;
 			SortDirection = GetSort(e.SortOrder);
-			using (DataManager = new PositionCore())
+			using (DataManager = new PositionModuleCore())
 			{
 				BindDataSource<IPositionModel>();
 			}

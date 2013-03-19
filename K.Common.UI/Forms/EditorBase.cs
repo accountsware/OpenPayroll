@@ -91,7 +91,7 @@ namespace K.Common.UI.Forms
             }
         }
 
-		protected virtual void ShowMessage(BaseCore dataManager)
+		protected virtual void ShowMessage(PayrollModuleCore dataManager)
 		{
 			MsgHelpers.ShowInfo(this, dataManager.Message);
 			Close();

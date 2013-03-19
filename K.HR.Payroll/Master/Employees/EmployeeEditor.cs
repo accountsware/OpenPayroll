@@ -21,7 +21,7 @@ namespace K.HR.Payroll.Master.Employees
 
     	private void PopulatePosition()
     	{
-    		using (var position = new PositionCore())
+    		using (var position = new PositionModuleCore())
     		{
 				var source = position.Get<IPositionModel>();
     			positionName.DisplayMember = "PositionName";
@@ -46,7 +46,7 @@ namespace K.HR.Payroll.Master.Employees
 
         private void PopulateInterfaceFromModel(int id)
         {
-            using(var facade = new EmployeeCore())
+            using(var facade = new EmployeeModuleCore())
             {
                 var employee = facade.Get<IEmployeeModel>(WhereTerm.DefaultParam(id, "ID")).FirstOrDefault();
                 if (employee == null || !facade.IsSuccess)
@@ -103,7 +103,7 @@ namespace K.HR.Payroll.Master.Employees
         {
             base.Save();
             var employee = PopulateEmployeeModelFromInterface();
-            using(var facade = new EmployeeCore())
+            using(var facade = new EmployeeModuleCore())
             {
 				try
 				{
@@ -125,7 +125,7 @@ namespace K.HR.Payroll.Master.Employees
             employee.Id = Convert.ToInt32(recordId.Text);
             employee.ModifiedBy = modifiedBy.Text;
             employee.ModifiedDate = modifiedDate.Value;
-            using (var facade = new EmployeeCore())
+            using (var facade = new EmployeeModuleCore())
             {
                 facade.Update(employee);
                 ShowMessage(facade);
@@ -136,7 +136,7 @@ namespace K.HR.Payroll.Master.Employees
         {
             base.DeleteRecord();
             var id = Convert.ToInt32(recordId.Text);
-            using (var facade = new EmployeeCore())
+            using (var facade = new EmployeeModuleCore())
             {
                 facade.Delete(id);
                 ShowMessage(facade);
