@@ -140,6 +140,7 @@ namespace K.Common.UI.Panels
 			// TODO SET DATA SOURCE
 			PopulateListView(source);
 		    if (lastButtonNavigator != null) lastButtonNavigator.Enabled = true;
+			SetPagingEnviroment();
 		}
 
 		/// <summary>

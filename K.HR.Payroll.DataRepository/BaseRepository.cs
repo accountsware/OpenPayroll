@@ -19,7 +19,8 @@ namespace K.HR.Payroll.DataRepository
 		protected kk_sp_payrollEntities Entities;
 		protected EntityConnection Connection;
 		const string DATA_PROTECTION_PROVIDER = "DataProtectionConfigurationProvider";
-		protected string ConnectionString;// = ConfigurationManager.ConnectionStrings["lexyEntities"].ConnectionString;
+		// TODO CurrentConnection Must Configurable
+		protected string ConnectionString = ConfigurationManager.ConnectionStrings["CurrentConnection"].ConnectionString;
 		
 		protected BaseRepository()
 		{
@@ -39,57 +40,52 @@ namespace K.HR.Payroll.DataRepository
 				//var blnChanged = false;
 				var oSection = oConfiguration.GetSection("connectionStrings") as ConnectionStringsSection;
 
-				if (oSection != null)
+				if (oSection == null) return;
+				if ((oSection.ElementInformation.IsLocked) || (oSection.SectionInformation.IsLocked))
 				{
-					if ((!(oSection.ElementInformation.IsLocked)) && (!(oSection.SectionInformation.IsLocked)))
+					throw new Exception("File Configuration is locked");
+				}
+				if (protect)
+				{
+					if (!(oSection.SectionInformation.IsProtected))
 					{
-						if (protect)
-						{
-							if (!(oSection.SectionInformation.IsProtected))
-							{
-								oSection.SectionInformation.ProtectSection(DATA_PROTECTION_PROVIDER);
-							}
-						}
-						else
-						{
-							if (oSection.SectionInformation.IsProtected)
-							{
-								oSection.SectionInformation.UnprotectSection();
-								ConnectionString = oSection.ConnectionStrings["LexyEntities"].ConnectionString;
-							}
-							else
-							{
-								ConnectionString = oSection.ConnectionStrings["LexyEntities"].ConnectionString;
-								//oSection.SectionInformation.ProtectSection(DATA_PROTECTION_PROVIDER);
-								//oSection.SectionInformation.ForceSave = true;
-								//oConfiguration.Save();
-
-								//var isweb = ConfigurationManager.AppSettings["IsWebApps"];
-								//if (isweb.Equals("0"))
-								//{
-								//    oSection.SectionInformation.ProtectSection(DATA_PROTECTION_PROVIDER);
-								//    oSection.SectionInformation.ForceSave = true;
-								//    oConfiguration.Save();
-								//}
-							}
-						}
+						oSection.SectionInformation.ProtectSection(DATA_PROTECTION_PROVIDER);
+					}
+				}
+				else
+				{
+					if (oSection.SectionInformation.IsProtected)
+					{
+						oSection.SectionInformation.UnprotectSection();
+						ConnectionString = oSection.ConnectionStrings["CurrentConnection"].ConnectionString;
 					}
 					else
 					{
-						throw new Exception("File Configuration is locked");
-					}
+						ConnectionString = oSection.ConnectionStrings["CurrentConnection"].ConnectionString;
+						//oSection.SectionInformation.ProtectSection(DATA_PROTECTION_PROVIDER);
+						//oSection.SectionInformation.ForceSave = true;
+						//oConfiguration.Save();
 
-					//if (blnChanged)
-					//{
-					//    oSection.SectionInformation.ForceSave = true;
-					//    oConfiguration.Save();
-					//}
+						//var isweb = ConfigurationManager.AppSettings["IsWebApps"];
+						//if (isweb.Equals("0"))
+						//{
+						//    oSection.SectionInformation.ProtectSection(DATA_PROTECTION_PROVIDER);
+						//    oSection.SectionInformation.ForceSave = true;
+						//    oConfiguration.Save();
+						//}
+					}
 				}
+
+				//if (blnChanged)
+				//{
+				//    oSection.SectionInformation.ForceSave = true;
+				//    oConfiguration.Save();
+				//}
 			}
 			catch (Exception ex)
 			{
 				// TODO ERROR User Privilages
-				ConnectionString = ConfigurationManager.ConnectionStrings["lexyEntities"].ConnectionString;
+				ConnectionString = ConfigurationManager.ConnectionStrings["CurrentConnection"].ConnectionString;
 
 			}
 		}

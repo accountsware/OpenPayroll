@@ -114,7 +114,6 @@ namespace K.HR.Payroll.DataRepository
 			return Entities.SaveChanges();
 		}
 
-
 		private static EmployeeModel PopulateEntityToNewModel(Employee item)
 		{
 			return new EmployeeModel
@@ -143,7 +142,7 @@ namespace K.HR.Payroll.DataRepository
 			{
 				throw new Exception(MessageEntityNotFound);
 			}
-			var tquery = (from a in Entities.Employees select a).Where(whereterm, ListValue.ToArray()).OrderBy(sort + " " + dir);
+			var tquery = (from a in Entities.Employees select a).Where(whereterm, ListValue.ToArray()).OrderBy(sort + " " + dir).ToList();
 			totalCount = tquery.Count();
 			return query.Select(PopulateEntityToNewModel).Cast<IEmployeeModel>().ToList();
 		}
