@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using K.Common.Interfaces;
 using K.Common.Patterns;
 
@@ -97,5 +98,78 @@ namespace K.Common.Data
                 ColumnName = column
             };
         }
+
+		public static bool ResizeParameter(ref IListParameter[] parameters, int size)
+		{
+			var hasRowParams = false;
+			if (parameters == null)
+			{
+				Array.Resize(ref parameters, size);
+			}
+			else
+			{
+				if (parameters.Any(param => param.ColumnName.Equals(DefaultValue.COLUMN_ROW_STATUS)))
+					hasRowParams = true;
+				if (!hasRowParams)
+					Array.Resize(ref parameters, parameters.Length + size);
+			}
+			return hasRowParams;
+		}
+
+		/// <summary>
+		/// To create where term condition with default value TableName = string.Empty, ParamDataType = EnumParamterDataTypes.DateTime
+		/// </summary>
+		/// <param name="value">Fill DateTime value of where term</param>
+		/// <param name="column">Fill string value of column name</param>
+		/// <param name="sqlOperator">Fill sql operator</param>
+		/// <returns>WhereTerm</returns>
+		public static WhereTerm Parameter(DateTime value, string column, SqlOperator sqlOperator)
+		{
+			return new WhereTerm
+			{
+				Value = value,
+				TableName = String.Empty,
+				ParamDataType = EnumParamterDataTypes.DateTime,
+				Operator = sqlOperator,
+				ColumnName = column
+			};
+		}
+
+		/// <summary>
+		/// To create where term condition with default value TableName = string.Empty, ParamDataType = EnumParamterDataTypes.DateTime
+		/// </summary>
+		/// <param name="value">Fill integer value of where term</param>
+		/// <param name="column">Fill string value of column name</param>
+		/// <param name="sqlOperator">Fill sql operator</param>
+		/// <returns>WhereTerm</returns>
+		public static WhereTerm Parameter(int value, string column, SqlOperator sqlOperator)
+		{
+			return new WhereTerm
+			{
+				Value = value,
+				TableName = String.Empty,
+				ParamDataType = EnumParamterDataTypes.Number,
+				Operator = sqlOperator,
+				ColumnName = column
+			};
+		}
+
+		/// <summary>
+		/// To create where term condition with default value TableName = string.Empty, ParamDataType = EnumParamterDataTypes.Number & Operator = SqlOperator.Equals
+		/// </summary>
+		/// <param name="value">Fill int value of where term</param>
+		/// <param name="column">Fill string value of column name</param>
+		/// <returns>WhereTerm</returns>
+		public static WhereTerm Parameter(int value, string column)
+		{
+			return new WhereTerm
+			{
+				Value = value,
+				TableName = String.Empty,
+				ParamDataType = EnumParamterDataTypes.Number,
+				Operator = SqlOperator.Equals,
+				ColumnName = column
+			};
+		}
     }
 }

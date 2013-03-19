@@ -14,6 +14,7 @@ namespace K.Common.Patterns
         public const string DEFAULT_SEPARATOR = "\t";
         public const string DEFAULT_EMPTY = "NONE";
         public const string FILE_UPLOAD_PATH = @"~\Upload\";
+		public const string COLUMN_ROW_STATUS = "RowStatus";
         public static DateTime DefaultDate
         {
             get

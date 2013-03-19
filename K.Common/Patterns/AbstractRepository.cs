@@ -3,144 +3,147 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Data.EntityClient;
+using System.Data.Objects;
 using System.Linq;
 using System.Text;
 using K.Common.Data;
 using K.Common.Helpers;
 using K.Common.Interfaces;
-using K.Common.Patterns;
-using K.HR.Payroll.Entities;
 
-namespace K.HR.Payroll.DataRepository
+
+
+namespace K.Common.Patterns
 {
-	public abstract class BaseRepository : IDisposable
+	public abstract class AbstractRepository : IDataManager
 	{
-
-		protected kk_sp_payrollEntities Entities;
+		protected ObjectContext Entities;
 		protected EntityConnection Connection;
+		protected bool UsingTransaction;
 		const string DATA_PROTECTION_PROVIDER = "DataProtectionConfigurationProvider";
-		protected string ConnectionString;// = ConfigurationManager.ConnectionStrings["lexyEntities"].ConnectionString;
+		protected string ConnectionString = ConfigurationManager.ConnectionStrings["CurrentConnection"].ConnectionString;
 		
-		protected BaseRepository()
+		protected AbstractRepository()
 		{
-            ConnectionStringProtection(false);
-            Connection = new EntityConnection(ConnectionString);
-			Entities = new kk_sp_payrollEntities(Connection);
+			ConnectionStringProtection(false);
+			Connection = new EntityConnection(ConnectionString);
+			UsingTransaction = false;
 		}
 
+		protected AbstractRepository(ObjectContext entities)
+		{
+			ConnectionStringProtection(false);
+			Entities = entities;
+			Connection = entities.Connection as EntityConnection;
+			UsingTransaction = true;
+		}
+
+		protected Collection<object> ListValue { get; set; }
+
+		public abstract int Save<T>(T businessModel) where T : IBaseModel;
+		public abstract int Update<T>(T businessModel) where T : IBaseModel;
+		public abstract int Delete(int id);
+		public abstract IEnumerable<T> GetAll<T>() where T : IBaseModel;
+		public abstract IEnumerable<T> Get<T>(params IListParameter[] parameter) where T : IBaseModel;
+		public abstract T GetSingle<T>(params IListParameter[] parameter) where T : IBaseModel;
+		public abstract IEnumerable<T> Get<T>(int start, int limit, string sort, string dir, out int totalCount, params IListParameter[] parameter) where T : IBaseModel;
+		
 		private void ConnectionStringProtection(bool protect)
 		{
 			try
 			{
-
 				var oConfiguration = ConfigurationHelpers.GetCurrentConfiguration();
-
 				if (oConfiguration == null) return;
 				//var blnChanged = false;
 				var oSection = oConfiguration.GetSection("connectionStrings") as ConnectionStringsSection;
 
-				if (oSection != null)
+				if (oSection == null) return;
+				if ((oSection.ElementInformation.IsLocked) || (oSection.SectionInformation.IsLocked))
 				{
-					if ((!(oSection.ElementInformation.IsLocked)) && (!(oSection.SectionInformation.IsLocked)))
+					throw new Exception("File Configuration is locked");
+				}
+				if (protect)
+				{
+					if (!(oSection.SectionInformation.IsProtected))
 					{
-						if (protect)
-						{
-							if (!(oSection.SectionInformation.IsProtected))
-							{
-								oSection.SectionInformation.ProtectSection(DATA_PROTECTION_PROVIDER);
-							}
-						}
-						else
-						{
-							if (oSection.SectionInformation.IsProtected)
-							{
-								oSection.SectionInformation.UnprotectSection();
-								ConnectionString = oSection.ConnectionStrings["LexyEntities"].ConnectionString;
-							}
-							else
-							{
-								ConnectionString = oSection.ConnectionStrings["LexyEntities"].ConnectionString;
-								//oSection.SectionInformation.ProtectSection(DATA_PROTECTION_PROVIDER);
-								//oSection.SectionInformation.ForceSave = true;
-								//oConfiguration.Save();
-
-								//var isweb = ConfigurationManager.AppSettings["IsWebApps"];
-								//if (isweb.Equals("0"))
-								//{
-								//    oSection.SectionInformation.ProtectSection(DATA_PROTECTION_PROVIDER);
-								//    oSection.SectionInformation.ForceSave = true;
-								//    oConfiguration.Save();
-								//}
-							}
-						}
+						oSection.SectionInformation.ProtectSection(DATA_PROTECTION_PROVIDER);
+					}
+				}
+				else
+				{
+					if (oSection.SectionInformation.IsProtected)
+					{
+						oSection.SectionInformation.UnprotectSection();
+						ConnectionString = oSection.ConnectionStrings["ConnectionStringEntities"].ConnectionString;
 					}
 					else
 					{
-						throw new Exception("File Configuration is locked");
+						ConnectionString = oSection.ConnectionStrings["ConnectionStringEntities"].ConnectionString;
+						var isweb = ConfigurationManager.AppSettings["IsWebApps"];
+						if (isweb.Equals("0"))
+						{
+							oSection.SectionInformation.ProtectSection(DATA_PROTECTION_PROVIDER);
+							oSection.SectionInformation.ForceSave = true;
+							oConfiguration.Save();
+						}
 					}
-
-					//if (blnChanged)
-					//{
-					//    oSection.SectionInformation.ForceSave = true;
-					//    oConfiguration.Save();
-					//}
 				}
+
+				//if (blnChanged)
+				//{
+				//    oSection.SectionInformation.ForceSave = true;
+				//    oConfiguration.Save();
+				//}
 			}
 			catch (Exception ex)
 			{
-				// TODO ERROR User Privilages
 				ConnectionString = ConfigurationManager.ConnectionStrings["lexyEntities"].ConnectionString;
-
+				Console.WriteLine(ex.Message);
 			}
 		}
 
-		protected BaseRepository(kk_sp_payrollEntities entities)
-        {
-            ConnectionStringProtection(false);
-			Entities = entities;
-		}
-
-		public abstract int Save(IBaseModel businessModel);
-
-		public abstract int Update(IBaseModel businessModel);
-
-		public abstract int Delete(int id);
-
-		public abstract IEnumerable<IBaseModel> Get(params IListParameter[] parameter);
-
-		public abstract IEnumerable<IBaseModel> Get(int start, int limit, string sort, string dir, out int totalCount,
-		                                            params IListParameter[] parameter);
-
-		//public abstract int Save<T>(ref T businessModel) where T : IBaseModel;
-
-		//public abstract int Update<T>(ref T businessModel) where T : IBaseModel;
-
-		//public abstract int Delete(int id);
-
-		//public abstract IList<T> Get<T>() where T : IBaseModel;
-
-		//public abstract IList<T> Get<T>(params WhereTerm[] parameter) where T : IBaseModel;
-
-		//public abstract IList<T> Get<T>(int id) where T : IBaseModel;
-
-		//public abstract IList<T> GetPaging<T>(int start, int limit, string sort, string dir, out int totalCount, params IListParameter[] parameter) where T : IBaseModel;
-
-		protected string GetQueryParameterLinq(IEnumerable<IListParameter> lparams)
+		public void Dispose()
 		{
-			var listparams = new List<IListParameter>();
-			if (lparams != null)
-			{
-				listparams.AddRange(lparams);
-			}
-			listparams.Add(WhereTerm.DefaultParam(0, "RowStatus"));
+			if (UsingTransaction) return;
+			if (Entities != null)
+				Entities.Dispose();
+		}
+
+		protected string ObjectName { get; set; }
+
+		protected string MessageEntityNull
+		{
+			get { return string.Format("{0} Entity is NULL", ObjectName); }
+		}
+
+		protected string MessageModelNull
+		{
+			get { return string.Format("{0} Model is NULL", ObjectName); }
+		}
+
+		protected string MessageEntityNotFound
+		{
+			get { return string.Format("{0} Entity not found", ObjectName); }
+		}
+
+		protected void ValidateSorting(ref string sort, ref string dir)
+		{
+			if (string.IsNullOrEmpty(sort))
+				sort = "Id";
+			if (string.IsNullOrEmpty(dir))
+				dir = "DESC";
+		}
+
+		public string GetQueryParameterLinq(params IListParameter[] parameters)
+		{
+			var hasRowParams = WhereTerm.ResizeParameter(ref parameters, 1);
+			if (!hasRowParams)
+				parameters[parameters.Length - 1] = WhereTerm.Parameter(0, DefaultValue.COLUMN_ROW_STATUS);
 			var query = new StringBuilder();
 			ListValue = new Collection<object>();
 			var indexpass = 0;
-			var d = listparams.Where(param => !string.IsNullOrEmpty(param.ColumnName)).ToList();
-			listparams = d;
-			foreach (var param in listparams)
+			foreach (var param in parameters)
 			{
-				var index = listparams.ToList().IndexOf(param) + indexpass;
+				var index = parameters.ToList().IndexOf(param) + indexpass;
 				switch (param.ParamDataType)
 				{
 					case EnumParamterDataTypes.DateTime:
@@ -148,8 +151,8 @@ namespace K.HR.Payroll.DataRepository
 							var date1 = Convert.ToDateTime(param.GetValue());
 							var fdate = new DateTime(date1.Year, date1.Month, date1.Day, 0, 0, 0);
 							var ldate = new DateTime(date1.Year, date1.Month, date1.Day, 23, 59, 59);
-							var fparma = WhereTerm.DefaultParam(fdate, param.ColumnName, SqlOperator.GreatThanEqual);
-							var lparma = WhereTerm.DefaultParam(ldate, param.ColumnName, SqlOperator.LesThanEqual);
+							var fparma = WhereTerm.Parameter(fdate, param.ColumnName, SqlOperator.GreatThanEqual);
+							var lparma = WhereTerm.Parameter(ldate, param.ColumnName, SqlOperator.LesThanEqual);
 							query.Append(GetValueParameterLinq(fparma, index) + DefaultValue.LOGICAL_SQL);
 							ListValue.Add(fparma.GetValue());
 							index++;
@@ -163,8 +166,8 @@ namespace K.HR.Payroll.DataRepository
 							query.Append(GetValueParameterLinq(param, index) + DefaultValue.LOGICAL_SQL);
 							ListValue.Add(param.GetValue());
 							var date1 = Convert.ToDateTime(((IListRangeParameter)param).GetValue2());
-							var ldate = new DateTime(date1.Year, date1.Month, date1.Day, 23, 59, 59);
-							ListValue.Add(ldate);
+							//var ldate = new DateTime(date1.Year, date1.Month, date1.Day, 23, 59, 59);
+							ListValue.Add(date1);
 							indexpass++;
 						}
 						break;
@@ -186,7 +189,7 @@ namespace K.HR.Payroll.DataRepository
 			}
 			return query.ToString();
 		}
-
+		
 		/// <summary>
 		/// {0} Table Name
 		/// {1} Column Name
@@ -211,6 +214,50 @@ namespace K.HR.Payroll.DataRepository
 					return GetBooleanLinq(param, index);
 				default:
 					return GetCharacterLinq(param, index);
+			}
+		}
+
+		/// <summary>
+		/// {0} Table Name
+		/// {1} Column Name
+		/// {2} Operator
+		/// </summary>
+		/// <param name="param"></param>
+		/// <param name="index"></param>
+		/// <returns></returns>
+		private static string GetCharacterLinq(IListParameter param, int index)
+		{
+			//ListValue.Add(param.GetValue());
+			//return string.Format(" ({0}{1}{2}) ",
+			//    (string.IsNullOrEmpty(param.TableName) ? string.Empty : param.TableName + DefaultValue.DOT),
+			//    param.ColumnName, GetOperatorCharacterLinq(param.Operator, index));
+			return string.Format(" ({0}{1}{2}) ",
+				string.Empty,
+				param.ColumnName, GetOperatorCharacterLinq(param.Operator, index));
+		}
+
+		private static string GetOperatorCharacterLinq(SqlOperator @operator, int param)
+		{
+			switch (@operator)
+			{
+				case SqlOperator.NotEqual:
+					return string.Format("<> @{0}", param);
+				case SqlOperator.GreatThan:
+					return string.Format("> @{0}", param);
+				case SqlOperator.GreatThanEqual:
+					return string.Format(">= @{0}", param);
+				case SqlOperator.LessThan:
+					return string.Format("< @{0}", param);
+				case SqlOperator.LesThanEqual:
+					return string.Format("<= @{0}", param);
+				case SqlOperator.BeginWith:
+					return string.Format(".StartsWith(@{0})", param);
+				case SqlOperator.EndWith:
+					return string.Format(".EndsWith(@{0})", param);
+				case SqlOperator.Like:
+					return string.Format(".Contains(@{0})", param);
+				default:
+					return string.Format(".Equals(@{0})", param);
 			}
 		}
 
@@ -298,82 +345,17 @@ namespace K.HR.Payroll.DataRepository
 			}
 		}
 
-		/// <summary>
-		/// {0} Table Name
-		/// {1} Column Name
-		/// {2} Operator
-		/// </summary>
-		/// <param name="param"></param>
-		/// <param name="index"></param>
-		/// <returns></returns>
-		private static string GetCharacterLinq(IListParameter param, int index)
+		protected void OpenConnection()
 		{
-			//ListValue.Add(param.GetValue());
-			//return string.Format(" ({0}{1}{2}) ",
-			//    (string.IsNullOrEmpty(param.TableName) ? string.Empty : param.TableName + DefaultValue.DOT),
-			//    param.ColumnName, GetOperatorCharacterLinq(param.Operator, index));
-			return string.Format(" ({0}{1}{2}) ",
-				string.Empty,
-				param.ColumnName, GetOperatorCharacterLinq(param.Operator, index));
+			if (Connection.State != System.Data.ConnectionState.Open)
+				Connection.Open();
 		}
 
-		private static string GetOperatorCharacterLinq(SqlOperator @operator, int param)
+		protected void CloseConnection()
 		{
-			switch (@operator)
-			{
-				case SqlOperator.NotEqual:
-					return string.Format("<> @{0}", param);
-				case SqlOperator.GreatThan:
-					return string.Format("> @{0}", param);
-				case SqlOperator.GreatThanEqual:
-					return string.Format(">= @{0}", param);
-				case SqlOperator.LessThan:
-					return string.Format("< @{0}", param);
-				case SqlOperator.LesThanEqual:
-					return string.Format("<= @{0}", param);
-				case SqlOperator.BeginWith:
-					return string.Format(".StartsWith(@{0})", param);
-				case SqlOperator.EndWith:
-					return string.Format(".EndsWith(@{0})", param);
-				case SqlOperator.Like:
-					return string.Format(".Contains(@{0})", param);
-				default:
-					return string.Format(".Equals(@{0})", param);
-			}
+			if (Connection.State != System.Data.ConnectionState.Closed)
+				Connection.Close();
 		}
-
-		protected Collection<object> ListValue { get; set; }
-
-		protected string ObjectName { get; set; }
-
-		public virtual void Dispose()
-		{
-			if (Entities != null)
-				Entities.Dispose();
-		}
-
-		protected string MessageEntityNull
-		{
-			get { return string.Format("{0} Entity is NULL", ObjectName); }
-		}
-
-		protected string MessageModelNull
-		{
-			get { return string.Format("{0} Model is NULL", ObjectName); }
-		}
-
-		protected string MessageEntityNotFound
-		{
-			get { return string.Format("{0} Entity not found", ObjectName); }
-		}
-
-		protected void ValidateSorting(ref string sort,ref string dir)
-		{
-			if (string.IsNullOrEmpty(sort))
-				sort = "Id";
-			if (string.IsNullOrEmpty(dir))
-				dir = "DESC";
-		}
-
+		
 	}
 }

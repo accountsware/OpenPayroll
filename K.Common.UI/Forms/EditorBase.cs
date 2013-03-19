@@ -79,16 +79,16 @@ namespace K.Common.UI.Forms
 
         protected virtual void ShowMessage(IDataManager dataManager)
         {
-            if (dataManager.IsSuccess)
-            {
-                MsgHelpers.ShowInfo(this, dataManager.Message);
-                Close();
-                MaintainData.RefreshList();
-            }
-            else
-            {
-                MsgHelpers.ShowError(this, "Error", dataManager.Message);
-            }
+			//if (dataManager.IsSuccess)
+			//{
+			//    MsgHelpers.ShowInfo(this, dataManager.Message);
+			//    Close();
+			//    MaintainData.RefreshList();
+			//}
+			//else
+			//{
+			//    MsgHelpers.ShowError(this, "Error", dataManager.Message);
+			//}
         }
 
 		protected virtual void ShowMessage(PayrollModuleCore dataManager)
