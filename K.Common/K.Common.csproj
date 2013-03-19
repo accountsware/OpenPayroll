@@ -51,6 +51,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fault\BusinessException.cs" />
+    <Compile Include="Fault\NoAccessMethodException.cs" />
     <Compile Include="Patterns\AbstractCore.cs" />
     <Compile Include="Patterns\AbstractRepository.cs" />
     <Compile Include="Patterns\Dynamic.cs" />
