@@ -44,7 +44,6 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -72,7 +71,6 @@
     <Compile Include="Interfaces\IFormConfiguration.cs" />
     <Compile Include="Interfaces\IListParameter.cs" />
     <Compile Include="Interfaces\IListRangeParameter.cs" />
-    <Compile Include="Interfaces\ILookup.cs" />
     <Compile Include="Interfaces\ITemplateField.cs" />
     <Compile Include="Interfaces\ITemplateUpload.cs" />
     <Compile Include="Patterns\TemplateField.cs" />
