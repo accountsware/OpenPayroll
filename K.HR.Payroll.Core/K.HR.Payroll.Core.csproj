@@ -50,7 +50,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PayrollModuleCore.cs" />
-    <Compile Include="CityModuleCore.cs" />
     <Compile Include="EmployeeModuleCore.cs" />
     <Compile Include="PayrollGroupModuleCore.cs" />
     <Compile Include="PayrollItem.cs" />

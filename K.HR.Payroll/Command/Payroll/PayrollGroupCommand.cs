@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using K.Common.UI.Patterns;
-using K.HR.Payroll.Master.Employees;
+﻿using K.Common.UI.Patterns;
 using K.HR.Payroll.Master.PayrollGroup;
 
 namespace K.HR.Payroll.Command.Payroll

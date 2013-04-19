@@ -67,7 +67,7 @@ namespace K.HR.Payroll
             if (onList) return;
             splitContainerCenter.Panel2.Controls.Add(maintainPanel);
             //((MaintainBaseControl)maintainPanel).FormParameter = formParameter;
-            ((MaintainBaseControl)maintainPanel).CurrentMainForm = this;
+            ((MaintainBaseControl)maintainPanel).MainConfiguration = this;
             maintainPanel.Dock = DockStyle.Fill;
             ListActiveObject.Add(new ActiveObject
             {
@@ -95,7 +95,7 @@ namespace K.HR.Payroll
 			if (onList) return;
 			splitContainerCenter.Panel2.Controls.Add(maintainPanel);
 			((MaintainBaseControl)maintainPanel).FormParameter = formParameter;
-			((MaintainBaseControl)maintainPanel).CurrentMainForm = this;
+			((MaintainBaseControl)maintainPanel).MainConfiguration = this;
 			maintainPanel.Dock = DockStyle.Fill;
 			ListActiveObject.Add(new ActiveObject
 			{

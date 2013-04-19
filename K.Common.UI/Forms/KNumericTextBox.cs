@@ -53,12 +53,12 @@ namespace K.Common.UI.Forms
 
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			bool result = true;
+			var result = true;
 
-			bool numericKeys = (
+			var numericKeys = (
 			                   	((e.KeyCode >= Keys.D0 && e.KeyCode <= Keys.D9) ||
-			                   	 (e.KeyCode >= Keys.NumPad0 && e.KeyCode <= Keys.NumPad9))
-			                   	&& e.Modifiers != Keys.Shift);
+			                   	 (e.KeyCode >= Keys.NumPad0 && e.KeyCode <= Keys.NumPad9) || e.KeyValue == 190)
+			                   	&& e.Modifiers != Keys.Shift  );
 
 			bool ctrlA = e.KeyCode == Keys.A && e.Modifiers == Keys.Control;
 
@@ -102,18 +102,18 @@ namespace K.Common.UI.Forms
 		{
 			if (!Text.Trim().Equals(DEFAULT_EMPTY_TEXT))
 			{
-				var invalid = false;
-				if (string.IsNullOrEmpty(Text))
-					invalid = true;
-				if (Text.Any(c => !char.IsDigit(c)))
-				{
-					invalid = true;
-				}
-				if (invalid)
+				if (string.IsNullOrEmpty(Text) || Text.Any(c => !char.IsNumber(c)))
 				{
 					Text = defaultText;
 					SelectAll();
 				}
+				//var invalid = string.IsNullOrEmpty(Text) || Text.Any(c => !char.IsDigit(c));
+				//if (Text.Contains("."))
+				//    invalid = false;
+				//if (invalid)
+				//{
+					
+				//}
 			}
 			base.OnTextChanged(e);
 		}
@@ -122,7 +122,7 @@ namespace K.Common.UI.Forms
 		{
 			if (m.Msg == WM_PASTE)
 			{
-				PasteEventArgs e = CheckPasteValid();
+				var e = CheckPasteValid();
 				if (e.RejectReason != PasteRejectReasons.Accepted)
 				{
 					m.Result = IntPtr.Zero;

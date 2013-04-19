@@ -35,7 +35,7 @@ namespace K.HR.Payroll.Master.Position
 			base.ToolStripButtonNewClick(sender, e);
 			using (var editor = new PositionEditor())
 			{
-				editor.Create(CurrentMainForm.CurrentMainForm, this);
+				editor.Create(MainConfiguration.CurrentMainForm, this);
 			}
 		}
 
@@ -45,7 +45,7 @@ namespace K.HR.Payroll.Master.Position
 			if (!IsReadyEdited) return;
 			using (var editor = new PositionEditor())
 			{
-				editor.Edit(CurrentMainForm.CurrentMainForm, CurrentId, this);
+				editor.Edit(MainConfiguration.CurrentMainForm, CurrentId, this);
 			}
 		}
 
@@ -55,7 +55,7 @@ namespace K.HR.Payroll.Master.Position
 			if (!IsReadyEdited) return;
 			using (var editor = new PositionEditor())
 			{
-				editor.Delete(CurrentMainForm.CurrentMainForm, CurrentId, this);
+				editor.Delete(MainConfiguration.CurrentMainForm, CurrentId, this);
 			}
 		}
 

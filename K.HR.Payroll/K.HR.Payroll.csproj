@@ -90,7 +90,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Command\Payroll\CityCommand.cs" />
     <Compile Include="Command\Payroll\EmployeeCommand.cs" />
     <Compile Include="Command\Payroll\OptionsCommand.cs" />
     <Compile Include="Command\Payroll\PayrollGroupCommand.cs" />
@@ -102,24 +101,6 @@
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Master\Cities\CityEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Master\Cities\CityEditor.Designer.cs">
-      <DependentUpon>CityEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Master\Cities\CityMaintain.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Master\Cities\CityMaintain.Designer.cs">
-      <DependentUpon>CityMaintain.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Master\Cities\CityParameterList.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Master\Cities\CityParameterList.Designer.cs">
-      <DependentUpon>CityParameterList.cs</DependentUpon>
     </Compile>
     <Compile Include="Master\Employees\EmployeeEditor.cs">
       <SubType>Form</SubType>
@@ -157,6 +138,12 @@
     <Compile Include="Master\PayrollGroup\PayrollGroupParameterList.Designer.cs">
       <DependentUpon>PayrollGroupParameterList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Master\PayrollGroup\PayrollGroupDetailEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Master\PayrollGroup\PayrollGroupDetailEditor.Designer.cs">
+      <DependentUpon>PayrollGroupDetailEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Master\Position\PositionEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -180,12 +167,6 @@
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Master\Cities\CityEditor.resx">
-      <DependentUpon>CityEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Master\Cities\CityMaintain.resx">
-      <DependentUpon>CityMaintain.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Master\Employees\EmployeeEditor.resx">
       <DependentUpon>EmployeeEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -194,6 +175,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Master\Employees\EmployeeParameterList.resx">
       <DependentUpon>EmployeeParameterList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Master\PayrollGroup\PayrollGroupDetailEditor.resx">
+      <DependentUpon>PayrollGroupDetailEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Master\PayrollGroup\PayrollGroupEditor.resx">
       <DependentUpon>PayrollGroupEditor.cs</DependentUpon>

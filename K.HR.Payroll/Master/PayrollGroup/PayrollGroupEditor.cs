@@ -27,23 +27,62 @@ namespace K.HR.Payroll.Master.PayrollGroup
             
 		    var btnAdd = detailPanel1.GetAddButton();
 		    btnAdd.Click += AddDetail;
+			Load += PayrollGroupEditorLoad;
+			groupType.SelectedIndexChanged += GroupTypeSelectedIndexChanged;
+		}
+
+		void GroupTypeSelectedIndexChanged(object sender, EventArgs e)
+		{
+			switch (groupType.SelectedIndex)
+			{
+				case 0:
+					unit.Text = @"1";
+					unit.ReadOnly = true;
+					break;
+				case 1:
+					unit.ReadOnly = false;
+					break;
+			}
+		}
+
+		void PayrollGroupEditorLoad(object sender, EventArgs e)
+		{
+			groupType.SelectedIndex = 0;
+
 		}
 
 	    private void AddDetail(object sender, EventArgs e)
 	    {
-            IPayrollItemModel payrollItemModel = new PayrollItemModel();
-	        payrollItemModel.Id = 0;
-	        payrollItemModel.Name = "";
-            payrollItemModel.CrudStatus = 1;
-	        payrollItemModel.CreatedDate = DateTime.Now;
-            objectListView1.AddObject(payrollItemModel);
+			using (var editor = new PayrollGroupDetailEditor())
+			{
+				var result = editor.Create(this, MaintainData);
+				if (result == DialogResult.Yes)
+				{
+					IPayrollItemModel payrollItemModel = new PayrollItemModel();
+					payrollItemModel.Id = editor.PayrollItem.Id;
+					payrollItemModel.Name = editor.PayrollItem.Name;
+					payrollItemModel.CrudStatus = editor.PayrollItem.CrudStatus;
+					payrollItemModel.CreatedDate = DateTime.Now;
+					payrollItemModel.CreatedBy = mainConfiguration.CurrentUserName;
+					payrollItemModel.CrudStatus = editor.PayrollItem.CrudStatus;
+					payrollItemModel.Description = editor.PayrollItem.Description;
+					payrollItemModel.ItemType = editor.PayrollItem.ItemType;
+					payrollItemModel.RowStatus = editor.PayrollItem.RowStatus;
+					payrollItemModel.Type = editor.PayrollItem.Type;
+					payrollItemModel.Unit = editor.PayrollItem.Unit;
+					objectListView1.AddObject(payrollItemModel);
+					
+				}
+			}
+			
 	    }
 
+		private IMainConfiguration mainConfiguration;
 	    internal void Create(Form form, IMaintainData maintaianControl)
 		{
 			MaintainData = maintaianControl;
-			var maintainData = form as IMainConfiguration;
-			if (maintainData != null)
+			mainConfiguration = form as IMainConfiguration;
+			if (mainConfiguration != null)
 			{
 				//createdBy.Text = maintainData.CurrentUserName;
 				//createdDate.Value = DateTime.Now;
@@ -53,6 +92,8 @@ namespace K.HR.Payroll.Master.PayrollGroup
 			{
 				Text = string.Format("{0}Create New Payroll Group", "");
 				SetCreateButton();
+				recordId.Text = @"Auto Generate";
+				recordId.ReadOnly = true;
 				editor.ShowDialogEditor(form, this);
 			}
 		}
@@ -103,13 +144,22 @@ namespace K.HR.Payroll.Master.PayrollGroup
         protected void SaveDetail(int parentId) {
             var facade = new PayrollItemModuleCore();
             if (objectListView1.Items.Count <= 0) return;
-            for (int i = 0; i < objectListView1.Items.Count; i++ )
+            for (var i = 0; i < objectListView1.Items.Count; i++ )
             {
                 var payrollItemModel = (IPayrollItemModel) objectListView1.GetModelObject(i);
                 payrollItemModel.Id = parentId;
-                if (payrollItemModel.CrudStatus == 1) facade.Save(payrollItemModel);
-                else if (payrollItemModel.CrudStatus == 2) facade.Update(payrollItemModel);
-                else if (payrollItemModel.CrudStatus == 3) facade.Delete(payrollItemModel.Id);
+                switch (payrollItemModel.CrudStatus)
+                {
+	                case 1:
+		                facade.Save(payrollItemModel);
+		                break;
+	                case 2:
+		                facade.Update(payrollItemModel);
+		                break;
+	                case 3:
+		                facade.Delete(payrollItemModel.Id);
+		                break;
+                }
             }
         }
 

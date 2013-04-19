@@ -49,6 +49,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "90. SQL", "90. SQL", "{B052
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "K.HR.Payroll.Model.Interfaces", "K.HR.Payroll.Model.Interfaces\K.HR.Payroll.Model.Interfaces.csproj", "{92CB477F-D68E-4301-95F4-E0D91F4537E5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "K.ConsoleTest", "K.ConsoleTest\K.ConsoleTest.csproj", "{FBFE2B81-8E9A-455B-A6FE-B68A9616997C}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -178,6 +180,16 @@ Global
 		{92CB477F-D68E-4301-95F4-E0D91F4537E5}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{92CB477F-D68E-4301-95F4-E0D91F4537E5}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{92CB477F-D68E-4301-95F4-E0D91F4537E5}.Release|x86.ActiveCfg = Release|Any CPU
+		{FBFE2B81-8E9A-455B-A6FE-B68A9616997C}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{FBFE2B81-8E9A-455B-A6FE-B68A9616997C}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{FBFE2B81-8E9A-455B-A6FE-B68A9616997C}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{FBFE2B81-8E9A-455B-A6FE-B68A9616997C}.Debug|x86.ActiveCfg = Debug|x86
+		{FBFE2B81-8E9A-455B-A6FE-B68A9616997C}.Debug|x86.Build.0 = Debug|x86
+		{FBFE2B81-8E9A-455B-A6FE-B68A9616997C}.Release|Any CPU.ActiveCfg = Release|x86
+		{FBFE2B81-8E9A-455B-A6FE-B68A9616997C}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{FBFE2B81-8E9A-455B-A6FE-B68A9616997C}.Release|Mixed Platforms.Build.0 = Release|x86
+		{FBFE2B81-8E9A-455B-A6FE-B68A9616997C}.Release|x86.ActiveCfg = Release|x86
+		{FBFE2B81-8E9A-455B-A6FE-B68A9616997C}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -195,5 +207,6 @@ Global
 		{15A9F754-85F8-4DA5-9C36-CAF83879A2B0} = {D9B168C9-CC80-443C-9DAF-39DDAA8D7344}
 		{98ABCEF1-FBB4-4945-856C-79E90912DE14} = {D9B168C9-CC80-443C-9DAF-39DDAA8D7344}
 		{EA7407BD-4360-44F2-95AC-D61FA8D18657} = {D9B168C9-CC80-443C-9DAF-39DDAA8D7344}
+		{FBFE2B81-8E9A-455B-A6FE-B68A9616997C} = {D9B168C9-CC80-443C-9DAF-39DDAA8D7344}
 	EndGlobalSection
 EndGlobal

@@ -32,10 +32,6 @@ namespace K.HR.Payroll.Command
 				new TreeNodeCommand("Payroll Group", new PayrollGroupCommand()
                                                      {
                                                          CurrentMainForm = mainform
-                                                     }),
-                new TreeNodeCommand("Cities", new CityCommand()
-                                                     {
-                                                         CurrentMainForm = mainform
                                                      })
             });
             return salesNodes;

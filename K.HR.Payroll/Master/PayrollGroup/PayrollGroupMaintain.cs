@@ -34,7 +34,7 @@ namespace K.HR.Payroll.Master.PayrollGroup
 			base.ToolStripButtonNewClick(sender, e);
 			using (var editor = new PayrollGroupEditor())
 			{
-				editor.Create(CurrentMainForm.CurrentMainForm, this);
+				editor.Create(MainConfiguration.CurrentMainForm, this);
 			}
 		}
 
@@ -44,7 +44,7 @@ namespace K.HR.Payroll.Master.PayrollGroup
 			if (!IsReadyEdited) return;
 			using (var editor = new PayrollGroupEditor())
 			{
-				editor.Edit(CurrentMainForm.CurrentMainForm, CurrentId, this);
+				editor.Edit(MainConfiguration.CurrentMainForm, CurrentId, this);
 			}
 		}
 
@@ -54,7 +54,7 @@ namespace K.HR.Payroll.Master.PayrollGroup
 			if (!IsReadyEdited) return;
 			using (var editor = new PayrollGroupEditor())
 			{
-				editor.Delete(CurrentMainForm.CurrentMainForm, CurrentId, this);
+				editor.Delete(MainConfiguration.CurrentMainForm, CurrentId, this);
 			}
 		}
 

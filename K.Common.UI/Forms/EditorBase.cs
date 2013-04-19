@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using K.Common.Data;
 using K.Common.UI.Helpers;
@@ -43,6 +37,7 @@ namespace K.Common.UI.Forms
 
         protected virtual void ButtonOkClick(object sender, EventArgs e)
         {
+			DialogResult = DialogResult.Yes;
             switch (DataStatus)
             {
                 case 1:
@@ -64,6 +59,7 @@ namespace K.Common.UI.Forms
 
         protected virtual void ButtonCancelClick(object sender, EventArgs e)
         {
+			DialogResult = DialogResult.No;
             Close();
         }
 

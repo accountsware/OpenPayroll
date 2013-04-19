@@ -43,7 +43,7 @@ namespace K.Common.UI.Panels
         }
 		
         public int Index { get; set; }
-        public IMainConfiguration CurrentMainForm { get; set; }
+        public IMainConfiguration MainConfiguration { get; set; }
 		protected PayrollModuleCore DataManager { get; set; }
 		protected int CurrentPageIndex { get; set; }
 		public int TotalIndex { get; set; }
@@ -230,7 +230,7 @@ namespace K.Common.UI.Panels
         protected virtual void ToolStripButtonFilterClick(object sender, EventArgs e)
         {
             if (FormParameter == null) return;
-            FormParameter.Show(CurrentMainForm.CurrentMainForm);
+            FormParameter.Show(MainConfiguration.CurrentMainForm);
         }
 
         protected virtual void ToolStripButtonExportClick(object sender, EventArgs e)
