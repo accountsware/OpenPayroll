@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using K.Common.Data;
 using K.Common.Interfaces;
 using K.Common.Patterns;
 using K.HR.Payroll.Entities;
@@ -11,21 +9,11 @@ using K.HR.Payroll.Model.Interfaces;
 
 namespace K.HR.Payroll.DataRepository
 {
-	public class EmployeeRepository : BaseRepository
+	public class EmployeeRepository : PayrollBaseRepository
 	{
 		public EmployeeRepository()
 		{
 			ObjectName = "Employee";
-		}
-
-		public override int Save(IBaseModel businessModel)
-		{
-			var model = businessModel as IEmployeeModel;
-			if (model == null)
-				throw new Exception(MessageModelNull);
-			var entity = PopulateModelToNewEntity(model);
-			Entities.AddToEmployees(entity);
-			return Entities.SaveChanges();
 		}
 
 		private static Employee PopulateModelToNewEntity(IEmployeeModel model)
@@ -49,7 +37,6 @@ namespace K.HR.Payroll.DataRepository
 			       		ModifiedBy = model.ModifiedBy,
 			       		ModifiedDate = model.ModifiedDate,
 			       		NationalIDNumber = model.NationalIDNumber,
-			       		PayrollGroupCode = model.PayrollGroupCode,
 			       		PositionName = model.PositionName,
 			       		PostalCode = model.PostalCode,
 			       		RowStatus = model.RowStatus,
@@ -60,18 +47,6 @@ namespace K.HR.Payroll.DataRepository
                         TerminateDate = model.TerminateDate,
                         TerminateDescription = model.TerminateDescription
 			       	};
-		}
-
-		public override int Update(IBaseModel businessModel)
-		{
-			var model = businessModel as IEmployeeModel;
-			if (model == null)
-				throw new Exception(MessageModelNull);
-			var query = (from d in Entities.Employees where d.Id == model.Id select d).FirstOrDefault();
-			if (query == null)
-				throw new Exception(MessageEntityNotFound);
-			PopulateModelToNewEntity(query, model);
-			return Entities.SaveChanges();
 		}
 
 		private static void PopulateModelToNewEntity(Employee query, IEmployeeModel model)
@@ -93,7 +68,6 @@ namespace K.HR.Payroll.DataRepository
 			query.ModifiedBy = model.ModifiedBy;
 			query.ModifiedDate = model.ModifiedDate;
 			query.NationalIDNumber = model.NationalIDNumber;
-			query.PayrollGroupCode = model.PayrollGroupCode;
 			query.PositionName = model.PositionName;
 			query.PostalCode = model.PostalCode;
 			query.RowStatus = model.RowStatus;
@@ -105,7 +79,29 @@ namespace K.HR.Payroll.DataRepository
 		    query.TerminateDescription = model.TerminateDescription;
 		}
 
-		public override int Delete(int id)
+	    public override int Save<T>(T businessModel)
+	    {
+            var model = businessModel as IEmployeeModel;
+            if (model == null)
+                throw new Exception(MessageModelNull);
+            var entity = PopulateModelToNewEntity(model);
+            Entities.AddToEmployees(entity);
+            return Entities.SaveChanges();
+	    }
+
+	    public override int Update<T>(T businessModel)
+	    {
+            var model = businessModel as IEmployeeModel;
+            if (model == null)
+                throw new Exception(MessageModelNull);
+            var query = (from d in Entities.Employees where d.Id == model.Id select d).FirstOrDefault();
+            if (query == null)
+                throw new Exception(MessageEntityNotFound);
+            PopulateModelToNewEntity(query, model);
+            return Entities.SaveChanges();
+	    }
+
+	    public override int Delete(int id)
 		{
 			var query = (from d in Entities.Employees where d.Id == id select d).FirstOrDefault();
 			if (query == null)
@@ -114,37 +110,50 @@ namespace K.HR.Payroll.DataRepository
 			return Entities.SaveChanges();
 		}
 
-		private static EmployeeModel PopulateEntityToNewModel(Employee item)
+	    public override IEnumerable<T> Get<T>(params IListParameter[] parameter)
+	    {
+            var whereterm = GetQueryParameterLinq(parameter);
+            var query = (from a in Entities.Employees select a).Where(whereterm, ListValue.ToArray()).ToList();
+            if (query == null)
+            {
+                throw new Exception(MessageEntityNotFound);
+            }
+            return query.Select(PopulateEntityToNewModel).Cast<T>().ToList();
+	    }
+
+	    public override T GetSingle<T>(params IListParameter[] parameter)
+	    {
+            var whereterm = GetQueryParameterLinq(parameter);
+            var query = (from a in Entities.Employees select a).Where(whereterm, ListValue.ToArray()).ToList();
+            if (query == null)
+            {
+                throw new Exception(MessageEntityNotFound);
+            }
+            return query.Select(PopulateEntityToNewModel).Cast<T>().ToList().FirstOrDefault();
+	    }
+
+	    public override IEnumerable<T> Get<T>(int start, int limit, string sort, string dir, out int totalCount, params IListParameter[] parameter)
+	    {
+            ValidateSorting(ref sort, ref dir);
+            var whereterm = GetQueryParameterLinq(parameter);
+            var query = (from a in Entities.Employees select a).Where(whereterm, ListValue.ToArray()).OrderBy(sort + " " + dir).Skip(start).Take(limit).ToList();
+            if (query == null)
+            {
+                throw new Exception(MessageEntityNotFound);
+            }
+            var tquery = (from a in Entities.Employees select a).Where(whereterm, ListValue.ToArray()).OrderBy(sort + " " + dir).ToList();
+            totalCount = tquery.Count();
+            return query.Select(PopulateEntityToNewModel).Cast<T>().ToList();
+	    }
+
+	    private static EmployeeModel PopulateEntityToNewModel(Employee item)
 		{
 			return new EmployeeModel
 			       	{
-			       		Address = item.Address, BankAccount = item.BankAccount, BankName = item.BankName, BirthDate = item.BirthDate, City = item.City, CreatedBy = item.CreatedBy, CreatedDate = item.CreatedDate, FirstName = item.FirstName, Gender = item.Gender, HiredDate = item.HiredDate, Id = item.Id, LastName = item.LastName, MaritalStatus = item.MaritalStatus, MiddleName = item.MiddleName, ModifiedBy = item.ModifiedBy, ModifiedDate = item.ModifiedDate, NationalIDNumber = item.NationalIDNumber, PayrollGroupCode = item.PayrollGroupCode, PositionName = item.PositionName, PostalCode = item.PostalCode, RowStatus = item.RowStatus, State = item.State, Title = item.Title, EmployeeID = item.EmployeeID, IsTerminate = item.IsTerminate, TerminateDate = item.TerminateDate, TerminateDescription = item.TerminateDescription
+			       		Address = item.Address, BankAccount = item.BankAccount, BankName = item.BankName, BirthDate = item.BirthDate, City = item.City, CreatedBy = item.CreatedBy, CreatedDate = item.CreatedDate, FirstName = item.FirstName, Gender = item.Gender, HiredDate = item.HiredDate, Id = item.Id, LastName = item.LastName, MaritalStatus = item.MaritalStatus, MiddleName = item.MiddleName, ModifiedBy = item.ModifiedBy, ModifiedDate = item.ModifiedDate, NationalIDNumber = item.NationalIDNumber, PositionName = item.PositionName, PostalCode = item.PostalCode, RowStatus = item.RowStatus, State = item.State, Title = item.Title, EmployeeID = item.EmployeeID, IsTerminate = item.IsTerminate, TerminateDate = item.TerminateDate, TerminateDescription = item.TerminateDescription
 			       	};
 		}
 
-		public override IEnumerable<IBaseModel> Get(params IListParameter[] parameter)
-		{
-			var whereterm = GetQueryParameterLinq(parameter);
-			var query = (from a in Entities.Employees select a).Where(whereterm, ListValue.ToArray()).ToList();
-			if (query == null)
-			{
-				throw new Exception(MessageEntityNotFound);
-			}
-			return query.Select(PopulateEntityToNewModel).Cast<IEmployeeModel>().ToList();
-		}
-
-		public override IEnumerable<IBaseModel> Get(int start, int limit, string sort, string dir, out int totalCount, params IListParameter[] parameter)
-		{
-			ValidateSorting(ref sort,ref dir);
-			var whereterm = GetQueryParameterLinq(parameter);
-			var query = (from a in Entities.Employees select a).Where(whereterm, ListValue.ToArray()).OrderBy(sort + " " + dir).Skip(start).Take(limit).ToList();
-			if (query == null)
-			{
-				throw new Exception(MessageEntityNotFound);
-			}
-			var tquery = (from a in Entities.Employees select a).Where(whereterm, ListValue.ToArray()).OrderBy(sort + " " + dir).ToList();
-			totalCount = tquery.Count();
-			return query.Select(PopulateEntityToNewModel).Cast<IEmployeeModel>().ToList();
-		}
+		
 	}
 }

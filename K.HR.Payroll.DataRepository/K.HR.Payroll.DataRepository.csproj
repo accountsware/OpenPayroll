@@ -52,7 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseRepository.cs" />
+    <Compile Include="PayrollBaseRepository.cs" />
     <Compile Include="EmployeeRepository.cs" />
     <Compile Include="PayrollGroupRepository.cs" />
     <Compile Include="PayrollItemRepository.cs" />
