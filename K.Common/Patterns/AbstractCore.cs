@@ -18,7 +18,8 @@ namespace K.Common.Patterns
 		public bool IsSuccess { get; set; }
 		public string Message { get; set; }
 
-		public abstract IEnumerable<T> Get<T>(int start, int limit, string sort, string dir, out int totalCount, params IListParameter[] parameter);
+	    public abstract IEnumerable<T> Get<T>(int start, int limit, string sort, string dir, out int totalCount,
+	                                          params IListParameter[] parameter);
 
 		protected TimeSpan TimeOut
 		{

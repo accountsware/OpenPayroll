@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
+using K.Common.Helpers;
 
 namespace K.Common.UI.Helpers
 {
@@ -12,7 +14,12 @@ namespace K.Common.UI.Helpers
 
         public static DialogResult ShowError(IWin32Window win, string msg)
         {
-            return MessageBox.Show(win, msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return MessageBox.Show(win, msg, @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        public static DialogResult ShowError(IWin32Window win, Exception err)
+        {
+            return MessageBox.Show(win, ExceptionHelpers.GetMessage(err), @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         public static DialogResult ShowInfo(IWin32Window win, string msg)

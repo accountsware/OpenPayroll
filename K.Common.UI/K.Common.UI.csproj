@@ -72,6 +72,12 @@
     <Compile Include="Forms\EditorBase.Designer.cs">
       <DependentUpon>EditorBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\KDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\KDataGridView.Designer.cs">
+      <DependentUpon>KDataGridView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\KDateTimePicker.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -157,6 +163,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\EditorBase.resx">
       <DependentUpon>EditorBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\KDataGridView.resx">
+      <DependentUpon>KDataGridView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\KDualDatePicker.resx">
       <DependentUpon>KDualDatePicker.cs</DependentUpon>

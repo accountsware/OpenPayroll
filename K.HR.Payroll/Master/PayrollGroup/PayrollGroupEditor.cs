@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using BrightIdeasSoftware;
+using K.Common.Helpers;
+using K.Common.Patterns;
 using K.Common.UI.Forms;
+using K.Common.UI.Helpers;
 using K.Common.UI.Patterns;
 using K.HR.Payroll.Core;
 using K.HR.Payroll.Model;
@@ -21,12 +19,6 @@ namespace K.HR.Payroll.Master.PayrollGroup
 		public PayrollGroupEditor()
 		{
 			InitializeComponent();
-			objectListView1.ShowGroups = false;
-            objectListView1.MultiSelect = false;
-		    //objectListView1 = true;
-            
-		    var btnAdd = detailPanel1.GetAddButton();
-		    btnAdd.Click += AddDetail;
 			Load += PayrollGroupEditorLoad;
 			groupType.SelectedIndexChanged += GroupTypeSelectedIndexChanged;
 		}
@@ -51,54 +43,83 @@ namespace K.HR.Payroll.Master.PayrollGroup
 
 		}
 
-	    private void AddDetail(object sender, EventArgs e)
-	    {
-			using (var editor = new PayrollGroupDetailEditor())
-			{
-				var result = editor.Create(this, MaintainData);
-				if (result == DialogResult.Yes)
-				{
-					IPayrollItemModel payrollItemModel = new PayrollItemModel();
-					payrollItemModel.Id = editor.PayrollItem.Id;
-					payrollItemModel.Name = editor.PayrollItem.Name;
-					payrollItemModel.CrudStatus = editor.PayrollItem.CrudStatus;
-					payrollItemModel.CreatedDate = DateTime.Now;
-					payrollItemModel.CreatedBy = mainConfiguration.CurrentUserName;
-					payrollItemModel.CrudStatus = editor.PayrollItem.CrudStatus;
-					payrollItemModel.Description = editor.PayrollItem.Description;
-					payrollItemModel.ItemType = editor.PayrollItem.ItemType;
-					payrollItemModel.RowStatus = editor.PayrollItem.RowStatus;
-					payrollItemModel.Type = editor.PayrollItem.Type;
-					payrollItemModel.Unit = editor.PayrollItem.Unit;
-					objectListView1.AddObject(payrollItemModel);
-					
-				}
-			}
-			
-	    }
-
 		private IMainConfiguration mainConfiguration;
+
 	    internal void Create(Form form, IMaintainData maintaianControl)
 		{
 			MaintainData = maintaianControl;
 			mainConfiguration = form as IMainConfiguration;
-			if (mainConfiguration != null)
-			{
-				//createdBy.Text = maintainData.CurrentUserName;
-				//createdDate.Value = DateTime.Now;
-			}
 			DataStatus = 1;
 			using (var editor = new BlankForm())
 			{
 				Text = string.Format("{0}Create New Payroll Group", "");
 				SetCreateButton();
-				recordId.Text = @"Auto Generate";
+				recordId.Text = DefaultValue.AUTO_GENERATE_TEXT;
 				recordId.ReadOnly = true;
+			    LoadComboItem();
+                //kDataGridView1.UserAddedRow += KDataGridView1UserAddedRow;
+                kDataGridView1.RowsAdded += KDataGridView1RowsAdded;
+                kDataGridView1.CellEndEdit += KDataGridView1CellEndEdit;
+                kDataGridView1.UserDeletingRow += KDataGridView1UserDeletingRow;
 				editor.ShowDialogEditor(form, this);
 			}
 		}
 
-		internal void Edit(Form form, int id, IMaintainData maintaianControl)
+        void KDataGridView1RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            if (kDataGridView1.Rows[e.RowIndex].Cells[DefaultValue.CRUD_STATUS] == null) return;
+            kDataGridView1.Rows[e.RowIndex].Cells[DefaultValue.CRUD_STATUS].Value = 1;
+        }
+
+	    static void KDataGridView1UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            var crudValue = Convert.ToInt32(e.Row.Cells[DefaultValue.CRUD_STATUS].Value);
+            if (crudValue == 1)
+            {
+                e.Cancel = false;
+            }
+            if (crudValue == 0 || crudValue == 2)
+            {
+                e.Row.DefaultCellStyle.BackColor = Color.Red;
+                e.Row.DefaultCellStyle.ForeColor = Color.WhiteSmoke;
+                e.Row.Cells[DefaultValue.CRUD_STATUS].Value = 3;
+            }
+	        if (crudValue != 3) return;
+	        e.Row.DefaultCellStyle.BackColor = Color.White;
+	        e.Row.DefaultCellStyle.ForeColor = Color.Black;
+	        e.Row.Cells[DefaultValue.CRUD_STATUS].Value = 2;
+	        e.Cancel = true;
+        }
+
+	    static void KDataGridView1UserAddedRow(object sender, DataGridViewRowEventArgs e)
+        {
+            
+        }
+
+
+        void KDataGridView1CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (kDataGridView1.Rows[e.RowIndex].IsNewRow) return;
+            if (Convert.ToInt32(kDataGridView1.Rows[e.RowIndex].Cells[DefaultValue.CRUD_STATUS].Value) == 0)
+                kDataGridView1.Rows[e.RowIndex].Cells[DefaultValue.CRUD_STATUS].Value = 2;
+        }
+
+	    private void LoadComboItem()
+	    {
+	        var comboType = kDataGridView1.Columns["typeDataGridViewTextBoxColumn"] as DataGridViewComboBoxColumn;
+	        if (comboType != null)
+	        {
+	            comboType.DataSource = PayrollCore.GetTypeItem();
+	        }
+
+            var comboUnitItemType = kDataGridView1.Columns["itemTypeDataGridViewTextBoxColumn"] as DataGridViewComboBoxColumn;
+            if (comboUnitItemType != null)
+            {
+                comboUnitItemType.DataSource = PayrollCore.GetUnitTypeItem();
+            }
+	    }
+
+	    internal void Edit(Form form, int id, IMaintainData maintaianControl)
 		{
 			MaintainData = maintaianControl;
 			DataStatus = 2;
@@ -130,37 +151,66 @@ namespace K.HR.Payroll.Master.PayrollGroup
 
 		protected override void Save()
 		{
-		    base.Save();
-		    var payrollgroup = PopulatePayrollGroupModelFromInterface();
-		    using (var facade = new PayrollGroupModuleCore())
-		    {
-				// TODO SAVE TRANSACTION
-				//facade.Save(payrollgroup);
-				//SaveDetail(myId);
-				//ShowMessage(facade);
-		    }
-		}
-
-        protected void SaveDetail(int parentId) {
-            var facade = new PayrollItemModuleCore();
-            if (objectListView1.Items.Count <= 0) return;
-            for (var i = 0; i < objectListView1.Items.Count; i++ )
+            try
             {
-                var payrollItemModel = (IPayrollItemModel) objectListView1.GetModelObject(i);
-                payrollItemModel.Id = parentId;
-                switch (payrollItemModel.CrudStatus)
+                base.Save();
+                CurrentDate = DateTime.Now;
+                var payrollgroup = PopulatePayrollGroupModelFromInterface();
+                payrollgroup.ListPayrollItemModel = PopulatePayrolItem();
+                using (var facade = new PayrollGroupCore())
                 {
-	                case 1:
-		                facade.Save(payrollItemModel);
-		                break;
-	                case 2:
-		                facade.Update(payrollItemModel);
-		                break;
-	                case 3:
-		                facade.Delete(payrollItemModel.Id);
-		                break;
+                    // TODO SAVE TRANSACTION
+                    facade.Save(payrollgroup);
                 }
             }
+            catch (Exception err)
+            {
+                MsgHelpers.ShowError(this, err);
+            }
+		}
+
+        private IList<IPayrollItemModel> PopulatePayrolItem()
+        {
+            return (from DataGridViewRow row in kDataGridView1.Rows
+                    select new PayrollItemModel
+                    {
+                        CreatedBy = mainConfiguration.CurrentUserName,
+                        CreatedDate = CurrentDate,
+                        CrudStatus = kDataGridView1.GetRowValue(row, DefaultValue.CRUD_STATUS, (byte)0),
+                        Description = kDataGridView1.GetRowValue(row, "descriptionDataGridViewTextBoxColumn", string.Empty),
+                        Id = kDataGridView1.GetRowValue(row, "idDataGridViewTextBoxColumn", 0),
+                        ItemType = kDataGridView1.GetRowValue(row, "itemTypeDataGridViewTextBoxColumn", string.Empty),
+                        Name = kDataGridView1.GetRowValue(row, "nameDataGridViewTextBoxColumn", string.Empty),
+                        PayrolGroupId = 0,
+                        RowStatus = 0,
+                        RowVersion = kDataGridView1.GetRowValue(row, "rowVersionDataGridViewImageColumn", (byte[])null),
+                        Type = kDataGridView1.GetRowValue(row, "typeDataGridViewTextBoxColumn", string.Empty),
+                        Unit = kDataGridView1.GetRowValue(row, "unitDataGridViewTextBoxColumn", 0),
+                        Value = kDataGridView1.GetRowValue(row, "valueDataGridViewTextBoxColumn", 0)
+                    }).Cast<IPayrollItemModel>().ToList();
+        }
+
+	    protected void SaveDetail(int parentId) 
+        {
+            //var facade = new PayrollItemModuleCore();
+            //if (objectListView1.Items.Count <= 0) return;
+            //for (var i = 0; i < objectListView1.Items.Count; i++ )
+            //{
+            //    var payrollItemModel = (IPayrollItemModel) objectListView1.GetModelObject(i);
+            //    payrollItemModel.Id = parentId;
+            //    switch (payrollItemModel.CrudStatus)
+            //    {
+            //        case 1:
+            //            facade.Save(payrollItemModel);
+            //            break;
+            //        case 2:
+            //            facade.Update(payrollItemModel);
+            //            break;
+            //        case 3:
+            //            facade.Delete(payrollItemModel.Id);
+            //            break;
+            //    }
+            //}
         }
 
 	    protected override void SaveUpdate()
@@ -170,7 +220,7 @@ namespace K.HR.Payroll.Master.PayrollGroup
             payrollGroup.Id = Convert.ToInt32(recordId.Text);
             payrollGroup.ModifiedBy = "";
             payrollGroup.ModifiedDate = DateTime.Now;
-		    using (var facade = new EmployeeModuleCore())
+		    using (var facade = new EmployeeCore())
 		    {
 				// TODO SAVE ACTION
 				//facade.Update(payrollGroup);
@@ -191,21 +241,20 @@ namespace K.HR.Payroll.Master.PayrollGroup
 
         private IPayrollGroupModel PopulatePayrollGroupModelFromInterface()
         {
-            IPayrollGroupModel payrollGroup = new PayrollGroupModel();
-            payrollGroup.Id = Convert.ToInt32((recordId.Text.Equals("") ? "0" : recordId.Text));
-            payrollGroup.Name = groupName.Text;
-            payrollGroup.Code = groupCode.Text;
-            payrollGroup.Type = groupType.SelectedText;
-            payrollGroup.Basic = Convert.ToDecimal(basicSalary.Text);
-            payrollGroup.Unit = Convert.ToByte(unit.Text);
-            payrollGroup.StartDate = startActiveDate.Value;
-            payrollGroup.EndDate = endActiveDate.Value;
-            payrollGroup.Description = description.Text;
-
-            payrollGroup.CreatedBy = "";
-            payrollGroup.CreatedDate = DateTime.Now;
-            payrollGroup.ModifiedBy = "";
-            payrollGroup.ModifiedDate = DateTime.Now;
+            var payrollGroup = new PayrollGroupModel
+                {
+                    Id = Convert.ToInt32((recordId.Text.Equals(DefaultValue.AUTO_GENERATE_TEXT) ? "0" : recordId.Text)),
+                    Name = groupName.Text,
+                    Code = groupCode.Text,
+                    Type = groupType.SelectedText,
+                    Basic = Convert.ToDecimal(basicSalary.Text),
+                    Unit = Convert.ToByte(unit.Text),
+                    StartDate = startActiveDate.Value,
+                    EndDate = endActiveDate.Value,
+                    Description = description.Text,
+                    CreatedBy = mainConfiguration.CurrentUserName,
+                    CreatedDate = CurrentDate
+                };
 
             return payrollGroup;
         }

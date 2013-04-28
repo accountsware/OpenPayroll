@@ -39,7 +39,7 @@ namespace K.Common.UI.Forms
         void BlankFormShown(object sender, EventArgs e)
         {
             Editor.FormClosed += EditorFormClosed;
-            Editor.ShowDialog(this);
+            Editor.Show(this);
         }
 
         void EditorFormClosed(object sender, FormClosedEventArgs e)

@@ -16,9 +16,31 @@ namespace K.Common.UI.Test
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void Form1Load(object sender, EventArgs e)
         {
+            var source = new List<PahlawanKota>
+                {
+                    new PahlawanKota
+                        {
+                          Keterangan   =  "Lest Hang out", Kota = "Jakarta", Nama = "Si Pitung"
+                        },
+                    new PahlawanKota
+                        {
+                            Kota = "Bandung", Nama = "Dewi Sartika", Keterangan = "Pileuleuyan"
+                        },
+                    new PahlawanKota
+                        {
+                            Kota = "Medan", Nama = "TB Simatupang", Keterangan = "Horas"
+                        }
+                };
+            bindingSource1.DataSource = source;
+        }
 
+        public class PahlawanKota
+        {
+            public string Nama { get; set; }
+            public string Kota { get; set; }
+            public string Keterangan { get; set; }
         }
     }
 }

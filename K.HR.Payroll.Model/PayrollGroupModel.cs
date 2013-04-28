@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using K.HR.Payroll.Model.Interfaces;
 
 namespace K.HR.Payroll.Model
 {
 	public class PayrollGroupModel : IPayrollGroupModel
 	{
-		public int Id { get; set; }
+	    public int Id { get; set; }
 		public byte RowStatus { get; set; }
 		public byte[] RowVersion { get; set; }
 		public DateTime CreatedDate { get; set; }
@@ -20,6 +21,7 @@ namespace K.HR.Payroll.Model
 		public DateTime StartDate { get; set; }
 		public DateTime EndDate { get; set; }
 		public string Description { get; set; }
-        public byte CrudStatus { get; set; }
+	    public IList<IPayrollItemModel> ListPayrollItemModel { get; set; }
+	    public byte CrudStatus { get; set; }
 	}
 }

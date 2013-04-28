@@ -44,7 +44,7 @@ namespace K.Common.UI.Panels
 		
         public int Index { get; set; }
         public IMainConfiguration MainConfiguration { get; set; }
-		protected PayrollModuleCore DataManager { get; set; }
+		protected PayrollBaseCore DataManager { get; set; }
 		protected int CurrentPageIndex { get; set; }
 		public int TotalIndex { get; set; }
 		public ListParameterBase FormParameter { get; set; }

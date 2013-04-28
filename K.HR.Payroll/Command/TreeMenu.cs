@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using K.Common.UI.Patterns;
 using K.HR.Payroll.Command.Payroll;
-using K.HR.Payroll.Master.Employees;
 
 namespace K.HR.Payroll.Command
 {

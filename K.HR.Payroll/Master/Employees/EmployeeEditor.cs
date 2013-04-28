@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using K.Common.Data;
@@ -46,7 +47,7 @@ namespace K.HR.Payroll.Master.Employees
 
         private void PopulateInterfaceFromModel(int id)
         {
-            using(var facade = new EmployeeModuleCore())
+            using(var facade = new EmployeeCore())
             {
                 var employee = facade.Get<IEmployeeModel>(WhereTerm.DefaultParam(id, "ID")).FirstOrDefault();
                 if (employee == null || !facade.IsSuccess)
@@ -64,7 +65,7 @@ namespace K.HR.Payroll.Master.Employees
                 firstName.Text = employee.FirstName;
                 gender.Text = employee.Gender;
                 hireDate.Value = employee.HiredDate;
-                recordId.Text = employee.Id.ToString();
+                recordId.Text = employee.Id.ToString(CultureInfo.InvariantCulture);
                 lastName.Text = employee.LastName;
                 maritalStatus.Text = employee.MaritalStatus;
                 middleName.Text = employee.MiddleName;
@@ -103,7 +104,7 @@ namespace K.HR.Payroll.Master.Employees
         {
             base.Save();
             var employee = PopulateEmployeeModelFromInterface();
-            using(var facade = new EmployeeModuleCore())
+            using(var facade = new EmployeeCore())
             {
 				try
 				{
@@ -125,7 +126,7 @@ namespace K.HR.Payroll.Master.Employees
             employee.Id = Convert.ToInt32(recordId.Text);
             employee.ModifiedBy = modifiedBy.Text;
             employee.ModifiedDate = modifiedDate.Value;
-            using (var facade = new EmployeeModuleCore())
+            using (var facade = new EmployeeCore())
             {
                 facade.Update(employee);
                 ShowMessage(facade);
@@ -136,7 +137,7 @@ namespace K.HR.Payroll.Master.Employees
         {
             base.DeleteRecord();
             var id = Convert.ToInt32(recordId.Text);
-            using (var facade = new EmployeeModuleCore())
+            using (var facade = new EmployeeCore())
             {
                 facade.Delete(id);
                 ShowMessage(facade);
@@ -145,30 +146,32 @@ namespace K.HR.Payroll.Master.Employees
 
         private IEmployeeModel PopulateEmployeeModelFromInterface()
         {
-            IEmployeeModel employee = new EmployeeModel();
-            employee.Address = address.Text;
-            employee.BankAccount = bankAccount.Text;
-            employee.BankName = bankName.Text;
-            employee.BirthDate = birthDate.Value;
-            employee.City = cityName.Text;
-            employee.CreatedBy = createdBy.Text;
-            employee.CreatedDate = createdDate.Value;
-            employee.FirstName = firstName.Text;
-            employee.Gender = gender.Text;
-            employee.HiredDate = hireDate.Value;
-			employee.Id = Convert.ToInt32(recordId.Text); 
-            employee.LastName = lastName.Text;
-        	employee.ModifiedBy = modifiedBy.Text;
-        	employee.ModifiedDate = modifiedDate.Value;
-            employee.MaritalStatus = maritalStatus.Text;
-            employee.MiddleName = middleName.Text;
-            employee.NationalIDNumber = nationalIdNumber.Text;
-            employee.PayrollGroupCode = payrollGroupCode.Text;
-            employee.PositionName = positionName.Text;
-            employee.PostalCode = postalCode.Text;
-            employee.State = stateName.Text;
-            employee.Title = titleName.Text;
-            employee.EmployeeID = employeeId.Text;
+            var employee = new EmployeeModel
+                {
+                    Address = address.Text,
+                    BankAccount = bankAccount.Text,
+                    BankName = bankName.Text,
+                    BirthDate = birthDate.Value,
+                    City = cityName.Text,
+                    CreatedBy = createdBy.Text,
+                    CreatedDate = createdDate.Value,
+                    FirstName = firstName.Text,
+                    Gender = gender.Text,
+                    HiredDate = hireDate.Value,
+                    Id = Convert.ToInt32(recordId.Text),
+                    LastName = lastName.Text,
+                    ModifiedBy = modifiedBy.Text,
+                    ModifiedDate = modifiedDate.Value,
+                    MaritalStatus = maritalStatus.Text,
+                    MiddleName = middleName.Text,
+                    NationalIDNumber = nationalIdNumber.Text,
+                    PayrollGroupCode = payrollGroupCode.Text,
+                    PositionName = positionName.Text,
+                    PostalCode = postalCode.Text,
+                    State = stateName.Text,
+                    Title = titleName.Text,
+                    EmployeeID = employeeId.Text
+                };
             bool b;
             Boolean.TryParse(isTerminate.Text, out b);
             employee.IsTerminate = b;

@@ -6,30 +6,26 @@
     <edmx:StorageModels>
     <Schema Namespace="PayrollModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="PayrollModelStoreContainer">
-          <EntitySet Name="Cities" EntityType="PayrollModel.Store.Cities" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Employees" EntityType="PayrollModel.Store.Employees" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PayrollGroup" EntityType="PayrollModel.Store.PayrollGroup" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PayrollItem" EntityType="PayrollModel.Store.PayrollItem" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PayrollTransaction" EntityType="PayrollModel.Store.PayrollTransaction" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Position" EntityType="PayrollModel.Store.Position" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TaxProgressionGroup" EntityType="PayrollModel.Store.TaxProgressionGroup" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TaxProgressionItem" EntityType="PayrollModel.Store.TaxProgressionItem" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Employees_PayrollGroup" Association="PayrollModel.Store.FK_Employees_PayrollGroup">
+            <End Role="PayrollGroup" EntitySet="PayrollGroup" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
           <AssociationSet Name="FK_PayrollItem_PayrollGroup" Association="PayrollModel.Store.FK_PayrollItem_PayrollGroup">
             <End Role="PayrollGroup" EntitySet="PayrollGroup" />
             <End Role="PayrollItem" EntitySet="PayrollItem" />
           </AssociationSet>
+          <AssociationSet Name="FK_TaxProgressionItem_TaxProgressionGroup" Association="PayrollModel.Store.FK_TaxProgressionItem_TaxProgressionGroup">
+            <End Role="TaxProgressionGroup" EntitySet="TaxProgressionGroup" />
+            <End Role="TaxProgressionItem" EntitySet="TaxProgressionItem" />
+          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Cities">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="RowVersion" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
-          <Property Name="RowStatus" Type="tinyint" Nullable="false" />
-          <Property Name="CityName" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="CreatedBy" Type="varchar" Nullable="false" MaxLength="24" />
-          <Property Name="CreatedDate" Type="smalldatetime" Nullable="false" />
-          <Property Name="ModifiedBy" Type="varchar" MaxLength="24" />
-          <Property Name="ModifiedDate" Type="smalldatetime" />
-        </EntityType>
         <EntityType Name="Employees">
           <Key>
             <PropertyRef Name="Id" />
@@ -54,7 +50,7 @@
           <Property Name="PostalCode" Type="char" Nullable="false" MaxLength="5" />
           <Property Name="BankName" Type="varchar" Nullable="false" MaxLength="64" />
           <Property Name="BankAccount" Type="varchar" Nullable="false" MaxLength="24" />
-          <Property Name="PayrollGroupCode" Type="char" Nullable="false" MaxLength="3" />
+          <Property Name="PayrollGroupID" Type="int" />
           <Property Name="IsTerminate" Type="bit" Nullable="false" />
           <Property Name="TerminateDate" Type="smalldatetime" />
           <Property Name="TerminateDescription" Type="varchar(max)" Nullable="false" />
@@ -135,6 +131,50 @@
           <Property Name="ModifiedBy" Type="varchar" MaxLength="24" />
           <Property Name="ModifiedDate" Type="smalldatetime" />
         </EntityType>
+        <EntityType Name="TaxProgressionGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="RowVersion" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="RowStatus" Type="tinyint" Nullable="false" />
+          <Property Name="StartDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="EndDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" Nullable="false" MaxLength="24" />
+          <Property Name="CreatedDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="24" />
+          <Property Name="ModifiedDate" Type="smalldatetime" />
+        </EntityType>
+        <EntityType Name="TaxProgressionItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="RowVersion" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="RowStatus" Type="tinyint" Nullable="false" />
+          <Property Name="TaxProgressionGroupId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="64" />
+          <Property Name="StartValue" Type="decimal" Nullable="false" Scale="2" />
+          <Property Name="EndValue" Type="decimal" Nullable="false" Scale="2" />
+          <Property Name="Percentage" Type="decimal" Nullable="false" Precision="4" Scale="2" />
+          <Property Name="CreatedBy" Type="varchar" Nullable="false" MaxLength="24" />
+          <Property Name="CreatedDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="24" />
+          <Property Name="ModifiedDate" Type="smalldatetime" />
+        </EntityType>
+        <Association Name="FK_Employees_PayrollGroup">
+          <End Role="PayrollGroup" Type="PayrollModel.Store.PayrollGroup" Multiplicity="0..1" />
+          <End Role="Employees" Type="PayrollModel.Store.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PayrollGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="PayrollGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PayrollItem_PayrollGroup">
           <End Role="PayrollGroup" Type="PayrollModel.Store.PayrollGroup" Multiplicity="1" />
           <End Role="PayrollItem" Type="PayrollModel.Store.PayrollItem" Multiplicity="0..1" />
@@ -144,6 +184,18 @@
             </Principal>
             <Dependent Role="PayrollItem">
               <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaxProgressionItem_TaxProgressionGroup">
+          <End Role="TaxProgressionGroup" Type="PayrollModel.Store.TaxProgressionGroup" Multiplicity="1" />
+          <End Role="TaxProgressionItem" Type="PayrollModel.Store.TaxProgressionItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaxProgressionGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TaxProgressionItem">
+              <PropertyRef Name="TaxProgressionGroupId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -161,7 +213,16 @@
             <End Role="PayrollGroup" EntitySet="PayrollGroups" />
             <End Role="PayrollItem" EntitySet="PayrollItems" />
           </AssociationSet>
-          <EntitySet Name="Cities" EntityType="PayrollModel.City" />
+          <EntitySet Name="TaxProgressionGroups" EntityType="PayrollModel.TaxProgressionGroup" />
+          <EntitySet Name="TaxProgressionItems" EntityType="PayrollModel.TaxProgressionItem" />
+          <AssociationSet Name="FK_Employees_PayrollGroup" Association="PayrollModel.FK_Employees_PayrollGroup">
+            <End Role="PayrollGroup" EntitySet="PayrollGroups" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaxProgressionItem_TaxProgressionGroup" Association="PayrollModel.FK_TaxProgressionItem_TaxProgressionGroup">
+            <End Role="TaxProgressionGroup" EntitySet="TaxProgressionGroups" />
+            <End Role="TaxProgressionItem" EntitySet="TaxProgressionItems" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Employee">
           <Key>
@@ -186,7 +247,6 @@
           <Property Name="PostalCode" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="true" />
           <Property Name="BankName" Type="String" Nullable="false" MaxLength="64" Unicode="false" FixedLength="false" />
           <Property Name="BankAccount" Type="String" Nullable="false" MaxLength="24" Unicode="false" FixedLength="false" />
-          <Property Name="PayrollGroupCode" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
           <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="24" Unicode="false" FixedLength="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" />
           <Property Name="ModifiedBy" Type="String" MaxLength="24" Unicode="false" FixedLength="false" />
@@ -195,6 +255,8 @@
           <Property Type="Boolean" Name="IsTerminate" Nullable="false" />
           <Property Type="DateTime" Name="TerminateDate" />
           <Property Type="String" Name="TerminateDescription" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="PayrollGroupID" />
+          <NavigationProperty Name="PayrollGroup" Relationship="PayrollModel.FK_Employees_PayrollGroup" FromRole="Employee" ToRole="PayrollGroup" />
         </EntityType>
         <EntityType Name="Position">
           <Key>
@@ -229,6 +291,7 @@
           <Property Type="String" Name="ModifiedBy" MaxLength="24" FixedLength="false" Unicode="false" />
           <Property Type="DateTime" Name="ModifiedDate" />
           <NavigationProperty Name="PayrollItem" Relationship="PayrollModel.FK_PayrollItem_PayrollGroup" FromRole="PayrollGroup" ToRole="PayrollItem" />
+          <NavigationProperty Name="Employees" Relationship="PayrollModel.FK_Employees_PayrollGroup" FromRole="PayrollGroup" ToRole="Employee" />
         </EntityType>
         <EntityType Name="PayrollItem">
           <Key>
@@ -282,19 +345,64 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="City">
+        <EntityType Name="TaxProgressionGroup">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Binary" Name="RowVersion" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
           <Property Type="Byte" Name="RowStatus" Nullable="false" />
-          <Property Type="String" Name="CityName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="StartDate" Nullable="false" />
+          <Property Type="DateTime" Name="EndDate" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="24" FixedLength="false" Unicode="false" />
           <Property Type="DateTime" Name="CreatedDate" Nullable="false" />
           <Property Type="String" Name="ModifiedBy" MaxLength="24" FixedLength="false" Unicode="false" />
           <Property Type="DateTime" Name="ModifiedDate" />
+          <NavigationProperty Name="TaxProgressionItems" Relationship="PayrollModel.FK_TaxProgressionItem_TaxProgressionGroup" FromRole="TaxProgressionGroup" ToRole="TaxProgressionItem" />
         </EntityType>
+        <EntityType Name="TaxProgressionItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Binary" Name="RowVersion" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Type="Byte" Name="RowStatus" Nullable="false" />
+          <Property Type="Int32" Name="TaxProgressionGroupId" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="StartValue" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="EndValue" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Percentage" Nullable="false" Precision="4" Scale="2" />
+          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="24" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="false" />
+          <Property Type="String" Name="ModifiedBy" MaxLength="24" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="ModifiedDate" />
+          <NavigationProperty Name="TaxProgressionGroup" Relationship="PayrollModel.FK_TaxProgressionItem_TaxProgressionGroup" FromRole="TaxProgressionItem" ToRole="TaxProgressionGroup" />
+        </EntityType>
+        <Association Name="FK_Employees_PayrollGroup">
+          <End Type="PayrollModel.PayrollGroup" Role="PayrollGroup" Multiplicity="0..1" />
+          <End Type="PayrollModel.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PayrollGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="PayrollGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaxProgressionItem_TaxProgressionGroup">
+          <End Type="PayrollModel.TaxProgressionGroup" Role="TaxProgressionGroup" Multiplicity="1" />
+          <End Type="PayrollModel.TaxProgressionItem" Role="TaxProgressionItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaxProgressionGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TaxProgressionItem">
+              <PropertyRef Name="TaxProgressionGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -304,6 +412,7 @@
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="PayrollModel.Employee">
               <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="PayrollGroupID" ColumnName="PayrollGroupID" />
                 <ScalarProperty Name="TerminateDescription" ColumnName="TerminateDescription" />
                 <ScalarProperty Name="TerminateDate" ColumnName="TerminateDate" />
                 <ScalarProperty Name="IsTerminate" ColumnName="IsTerminate" />
@@ -327,7 +436,6 @@
                 <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
                 <ScalarProperty Name="BankName" ColumnName="BankName" />
                 <ScalarProperty Name="BankAccount" ColumnName="BankAccount" />
-                <ScalarProperty Name="PayrollGroupCode" ColumnName="PayrollGroupCode" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
@@ -411,14 +519,34 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Cities">
-            <EntityTypeMapping TypeName="PayrollModel.City">
-              <MappingFragment StoreEntitySet="Cities">
+          <EntitySetMapping Name="TaxProgressionGroups">
+            <EntityTypeMapping TypeName="PayrollModel.TaxProgressionGroup">
+              <MappingFragment StoreEntitySet="TaxProgressionGroup">
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaxProgressionItems">
+            <EntityTypeMapping TypeName="PayrollModel.TaxProgressionItem">
+              <MappingFragment StoreEntitySet="TaxProgressionItem">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Percentage" ColumnName="Percentage" />
+                <ScalarProperty Name="EndValue" ColumnName="EndValue" />
+                <ScalarProperty Name="StartValue" ColumnName="StartValue" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TaxProgressionGroupId" ColumnName="TaxProgressionGroupId" />
                 <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
                 <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -445,8 +573,8 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="PayrollEntitiesModel" ZoomLevel="58">
-        <EntityTypeShape EntityType="PayrollModel.Employee" Width="1.5" PointX="0.75" PointY="0.75" Height="5.634013671875" IsExpanded="true" />
+      <Diagram Name="PayrollEntitiesModel" ZoomLevel="98">
+        <EntityTypeShape EntityType="PayrollModel.Employee" Width="1.5" PointX="0.75" PointY="0.75" Height="6.5955208333333326" IsExpanded="true" />
         <EntityTypeShape EntityType="PayrollModel.Position" Width="1.5" PointX="2.75" PointY="0.75" Height="2.5571907552083326" IsExpanded="true" />
         <EntityTypeShape EntityType="PayrollModel.PayrollGroup" Width="1.5" PointX="3.375" PointY="5" Height="4.0956022135416648" />
         <EntityTypeShape EntityType="PayrollModel.PayrollItem" Width="1.5" PointX="5.625" PointY="5.125" Height="3.9033007812499996" />
@@ -455,7 +583,16 @@
           <ConnectorPoint PointX="4.875" PointY="7.076650390625" />
           <ConnectorPoint PointX="5.625" PointY="7.076650390625" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="PayrollModel.City" Width="1.5" PointX="5.375" PointY="0.75" Height="2.5571907552083317" />
+        <EntityTypeShape EntityType="PayrollModel.TaxProgressionGroup" Width="1.5" PointX="8.375" PointY="6.25" Height="3.1340950520833317" />
+        <EntityTypeShape EntityType="PayrollModel.TaxProgressionItem" Width="1.5" PointX="10.625" PointY="6" Height="3.5186979166666674" />
+        <AssociationConnector Association="PayrollModel.FK_Employees_PayrollGroup" >
+          <ConnectorPoint PointX="3.375" PointY="6.1727604166666659" />
+          <ConnectorPoint PointX="2.25" PointY="6.1727604166666659" />
+        </AssociationConnector>
+        <AssociationConnector Association="PayrollModel.FK_TaxProgressionItem_TaxProgressionGroup" >
+          <ConnectorPoint PointX="9.875" PointY="7.8170475260416659" />
+          <ConnectorPoint PointX="10.625" PointY="7.8170475260416659" />
+        </AssociationConnector>
       </Diagram>
     </Diagrams>
   </Designer>

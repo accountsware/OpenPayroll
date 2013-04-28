@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using K.Common.Interfaces;
 using K.Common.Patterns;
 
@@ -38,5 +39,10 @@ namespace K.HR.Payroll.Model.Interfaces
 		/// keterangan
 		/// </summary>
 		string Description { get; set; }
+
+        /// <summary>
+        /// List Of IPayrollItemModel
+        /// </summary>
+        IList<IPayrollItemModel> ListPayrollItemModel { get; set; }
 	}
 }

@@ -8,17 +8,20 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
+using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
-using System.Data.EntityClient;
-using System.ComponentModel;
-using System.Xml.Serialization;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
 [assembly: EdmRelationshipAttribute("PayrollModel", "FK_PayrollItem_PayrollGroup", "PayrollGroup", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(K.HR.Payroll.Entities.PayrollGroup), "PayrollItem", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(K.HR.Payroll.Entities.PayrollItem), true)]
+[assembly: EdmRelationshipAttribute("PayrollModel", "FK_Employees_PayrollGroup", "PayrollGroup", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(K.HR.Payroll.Entities.PayrollGroup), "Employee", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(K.HR.Payroll.Entities.Employee), true)]
+[assembly: EdmRelationshipAttribute("PayrollModel", "FK_TaxProgressionItem_TaxProgressionGroup", "TaxProgressionGroup", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(K.HR.Payroll.Entities.TaxProgressionGroup), "TaxProgressionItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(K.HR.Payroll.Entities.TaxProgressionItem), true)]
 
 #endregion
 
@@ -153,20 +156,37 @@ namespace K.HR.Payroll.Entities
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<City> Cities
+        public ObjectSet<TaxProgressionGroup> TaxProgressionGroups
         {
             get
             {
-                if ((_Cities == null))
+                if ((_TaxProgressionGroups == null))
                 {
-                    _Cities = base.CreateObjectSet<City>("Cities");
+                    _TaxProgressionGroups = base.CreateObjectSet<TaxProgressionGroup>("TaxProgressionGroups");
                 }
-                return _Cities;
+                return _TaxProgressionGroups;
             }
         }
-        private ObjectSet<City> _Cities;
+        private ObjectSet<TaxProgressionGroup> _TaxProgressionGroups;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<TaxProgressionItem> TaxProgressionItems
+        {
+            get
+            {
+                if ((_TaxProgressionItems == null))
+                {
+                    _TaxProgressionItems = base.CreateObjectSet<TaxProgressionItem>("TaxProgressionItems");
+                }
+                return _TaxProgressionItems;
+            }
+        }
+        private ObjectSet<TaxProgressionItem> _TaxProgressionItems;
 
         #endregion
+
         #region AddTo Methods
     
         /// <summary>
@@ -210,253 +230,28 @@ namespace K.HR.Payroll.Entities
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the Cities EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the TaxProgressionGroups EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
-        public void AddToCities(City city)
+        public void AddToTaxProgressionGroups(TaxProgressionGroup taxProgressionGroup)
         {
-            base.AddObject("Cities", city);
+            base.AddObject("TaxProgressionGroups", taxProgressionGroup);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the TaxProgressionItems EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToTaxProgressionItems(TaxProgressionItem taxProgressionItem)
+        {
+            base.AddObject("TaxProgressionItems", taxProgressionItem);
         }
 
         #endregion
+
     }
-    
 
     #endregion
-    
+
     #region Entities
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="PayrollModel", Name="City")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class City : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new City object.
-        /// </summary>
-        /// <param name="id">Initial value of the Id property.</param>
-        /// <param name="rowVersion">Initial value of the RowVersion property.</param>
-        /// <param name="rowStatus">Initial value of the RowStatus property.</param>
-        /// <param name="cityName">Initial value of the CityName property.</param>
-        /// <param name="createdBy">Initial value of the CreatedBy property.</param>
-        /// <param name="createdDate">Initial value of the CreatedDate property.</param>
-        public static City CreateCity(global::System.Int32 id, global::System.Byte[] rowVersion, global::System.Byte rowStatus, global::System.String cityName, global::System.String createdBy, global::System.DateTime createdDate)
-        {
-            City city = new City();
-            city.Id = id;
-            city.RowVersion = rowVersion;
-            city.RowStatus = rowStatus;
-            city.CityName = cityName;
-            city.CreatedBy = createdBy;
-            city.CreatedDate = createdDate;
-            return city;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 Id
-        {
-            get
-            {
-                return _Id;
-            }
-            set
-            {
-                if (_Id != value)
-                {
-                    OnIdChanging(value);
-                    ReportPropertyChanging("Id");
-                    _Id = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("Id");
-                    OnIdChanged();
-                }
-            }
-        }
-        private global::System.Int32 _Id;
-        partial void OnIdChanging(global::System.Int32 value);
-        partial void OnIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Byte[] RowVersion
-        {
-            get
-            {
-                return StructuralObject.GetValidValue(_RowVersion);
-            }
-            set
-            {
-                OnRowVersionChanging(value);
-                ReportPropertyChanging("RowVersion");
-                _RowVersion = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("RowVersion");
-                OnRowVersionChanged();
-            }
-        }
-        private global::System.Byte[] _RowVersion;
-        partial void OnRowVersionChanging(global::System.Byte[] value);
-        partial void OnRowVersionChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Byte RowStatus
-        {
-            get
-            {
-                return _RowStatus;
-            }
-            set
-            {
-                OnRowStatusChanging(value);
-                ReportPropertyChanging("RowStatus");
-                _RowStatus = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("RowStatus");
-                OnRowStatusChanged();
-            }
-        }
-        private global::System.Byte _RowStatus;
-        partial void OnRowStatusChanging(global::System.Byte value);
-        partial void OnRowStatusChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String CityName
-        {
-            get
-            {
-                return _CityName;
-            }
-            set
-            {
-                OnCityNameChanging(value);
-                ReportPropertyChanging("CityName");
-                _CityName = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("CityName");
-                OnCityNameChanged();
-            }
-        }
-        private global::System.String _CityName;
-        partial void OnCityNameChanging(global::System.String value);
-        partial void OnCityNameChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String CreatedBy
-        {
-            get
-            {
-                return _CreatedBy;
-            }
-            set
-            {
-                OnCreatedByChanging(value);
-                ReportPropertyChanging("CreatedBy");
-                _CreatedBy = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("CreatedBy");
-                OnCreatedByChanged();
-            }
-        }
-        private global::System.String _CreatedBy;
-        partial void OnCreatedByChanging(global::System.String value);
-        partial void OnCreatedByChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime CreatedDate
-        {
-            get
-            {
-                return _CreatedDate;
-            }
-            set
-            {
-                OnCreatedDateChanging(value);
-                ReportPropertyChanging("CreatedDate");
-                _CreatedDate = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("CreatedDate");
-                OnCreatedDateChanged();
-            }
-        }
-        private global::System.DateTime _CreatedDate;
-        partial void OnCreatedDateChanging(global::System.DateTime value);
-        partial void OnCreatedDateChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String ModifiedBy
-        {
-            get
-            {
-                return _ModifiedBy;
-            }
-            set
-            {
-                OnModifiedByChanging(value);
-                ReportPropertyChanging("ModifiedBy");
-                _ModifiedBy = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("ModifiedBy");
-                OnModifiedByChanged();
-            }
-        }
-        private global::System.String _ModifiedBy;
-        partial void OnModifiedByChanging(global::System.String value);
-        partial void OnModifiedByChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> ModifiedDate
-        {
-            get
-            {
-                return _ModifiedDate;
-            }
-            set
-            {
-                OnModifiedDateChanging(value);
-                ReportPropertyChanging("ModifiedDate");
-                _ModifiedDate = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("ModifiedDate");
-                OnModifiedDateChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _ModifiedDate;
-        partial void OnModifiedDateChanging(Nullable<global::System.DateTime> value);
-        partial void OnModifiedDateChanged();
-
-        #endregion
-    
-    }
     
     /// <summary>
     /// No Metadata Documentation available.
@@ -490,13 +285,12 @@ namespace K.HR.Payroll.Entities
         /// <param name="postalCode">Initial value of the PostalCode property.</param>
         /// <param name="bankName">Initial value of the BankName property.</param>
         /// <param name="bankAccount">Initial value of the BankAccount property.</param>
-        /// <param name="payrollGroupCode">Initial value of the PayrollGroupCode property.</param>
         /// <param name="createdBy">Initial value of the CreatedBy property.</param>
         /// <param name="createdDate">Initial value of the CreatedDate property.</param>
         /// <param name="employeeID">Initial value of the EmployeeID property.</param>
         /// <param name="isTerminate">Initial value of the IsTerminate property.</param>
         /// <param name="terminateDescription">Initial value of the TerminateDescription property.</param>
-        public static Employee CreateEmployee(global::System.Int32 id, global::System.Byte[] rowVersion, global::System.Byte rowStatus, global::System.String nationalIDNumber, global::System.String firstName, global::System.String middleName, global::System.String lastName, global::System.String title, global::System.String positionName, global::System.DateTime birthDate, global::System.String gender, global::System.DateTime hiredDate, global::System.String maritalStatus, global::System.String address, global::System.String city, global::System.String state, global::System.String postalCode, global::System.String bankName, global::System.String bankAccount, global::System.String payrollGroupCode, global::System.String createdBy, global::System.DateTime createdDate, global::System.String employeeID, global::System.Boolean isTerminate, global::System.String terminateDescription)
+        public static Employee CreateEmployee(global::System.Int32 id, global::System.Byte[] rowVersion, global::System.Byte rowStatus, global::System.String nationalIDNumber, global::System.String firstName, global::System.String middleName, global::System.String lastName, global::System.String title, global::System.String positionName, global::System.DateTime birthDate, global::System.String gender, global::System.DateTime hiredDate, global::System.String maritalStatus, global::System.String address, global::System.String city, global::System.String state, global::System.String postalCode, global::System.String bankName, global::System.String bankAccount, global::System.String createdBy, global::System.DateTime createdDate, global::System.String employeeID, global::System.Boolean isTerminate, global::System.String terminateDescription)
         {
             Employee employee = new Employee();
             employee.Id = id;
@@ -518,7 +312,6 @@ namespace K.HR.Payroll.Entities
             employee.PostalCode = postalCode;
             employee.BankName = bankName;
             employee.BankAccount = bankAccount;
-            employee.PayrollGroupCode = payrollGroupCode;
             employee.CreatedBy = createdBy;
             employee.CreatedDate = createdDate;
             employee.EmployeeID = employeeID;
@@ -528,6 +321,7 @@ namespace K.HR.Payroll.Entities
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -994,30 +788,6 @@ namespace K.HR.Payroll.Entities
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String PayrollGroupCode
-        {
-            get
-            {
-                return _PayrollGroupCode;
-            }
-            set
-            {
-                OnPayrollGroupCodeChanging(value);
-                ReportPropertyChanging("PayrollGroupCode");
-                _PayrollGroupCode = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("PayrollGroupCode");
-                OnPayrollGroupCodeChanged();
-            }
-        }
-        private global::System.String _PayrollGroupCode;
-        partial void OnPayrollGroupCodeChanging(global::System.String value);
-        partial void OnPayrollGroupCodeChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
         public global::System.String CreatedBy
         {
             get
@@ -1204,9 +974,76 @@ namespace K.HR.Payroll.Entities
         private global::System.String _TerminateDescription;
         partial void OnTerminateDescriptionChanging(global::System.String value);
         partial void OnTerminateDescriptionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> PayrollGroupID
+        {
+            get
+            {
+                return _PayrollGroupID;
+            }
+            set
+            {
+                OnPayrollGroupIDChanging(value);
+                ReportPropertyChanging("PayrollGroupID");
+                _PayrollGroupID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PayrollGroupID");
+                OnPayrollGroupIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _PayrollGroupID;
+        partial void OnPayrollGroupIDChanging(Nullable<global::System.Int32> value);
+        partial void OnPayrollGroupIDChanged();
 
         #endregion
+
     
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PayrollModel", "FK_Employees_PayrollGroup", "PayrollGroup")]
+        public PayrollGroup PayrollGroup
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PayrollGroup>("PayrollModel.FK_Employees_PayrollGroup", "PayrollGroup").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PayrollGroup>("PayrollModel.FK_Employees_PayrollGroup", "PayrollGroup").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<PayrollGroup> PayrollGroupReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PayrollGroup>("PayrollModel.FK_Employees_PayrollGroup", "PayrollGroup");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PayrollGroup>("PayrollModel.FK_Employees_PayrollGroup", "PayrollGroup", value);
+                }
+            }
+        }
+
+        #endregion
+
     }
     
     /// <summary>
@@ -1253,6 +1090,7 @@ namespace K.HR.Payroll.Entities
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -1619,6 +1457,7 @@ namespace K.HR.Payroll.Entities
         partial void OnModifiedDateChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -1659,8 +1498,31 @@ namespace K.HR.Payroll.Entities
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PayrollModel", "FK_Employees_PayrollGroup", "Employee")]
+        public EntityCollection<Employee> Employees
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Employee>("PayrollModel.FK_Employees_PayrollGroup", "Employee");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Employee>("PayrollModel.FK_Employees_PayrollGroup", "Employee", value);
+                }
+            }
+        }
 
         #endregion
+
     }
     
     /// <summary>
@@ -1705,6 +1567,7 @@ namespace K.HR.Payroll.Entities
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -2047,6 +1910,7 @@ namespace K.HR.Payroll.Entities
         partial void OnModifiedDateChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -2089,6 +1953,7 @@ namespace K.HR.Payroll.Entities
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -2137,6 +2002,7 @@ namespace K.HR.Payroll.Entities
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -2503,6 +2369,7 @@ namespace K.HR.Payroll.Entities
         partial void OnModifiedDateChanged();
 
         #endregion
+
     
     }
     
@@ -2538,6 +2405,7 @@ namespace K.HR.Payroll.Entities
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -2736,9 +2604,705 @@ namespace K.HR.Payroll.Entities
         partial void OnModifiedDateChanged();
 
         #endregion
+
     
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="PayrollModel", Name="TaxProgressionGroup")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class TaxProgressionGroup : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new TaxProgressionGroup object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="rowVersion">Initial value of the RowVersion property.</param>
+        /// <param name="rowStatus">Initial value of the RowStatus property.</param>
+        /// <param name="startDate">Initial value of the StartDate property.</param>
+        /// <param name="endDate">Initial value of the EndDate property.</param>
+        /// <param name="description">Initial value of the Description property.</param>
+        /// <param name="createdBy">Initial value of the CreatedBy property.</param>
+        /// <param name="createdDate">Initial value of the CreatedDate property.</param>
+        public static TaxProgressionGroup CreateTaxProgressionGroup(global::System.Int32 id, global::System.Byte[] rowVersion, global::System.Byte rowStatus, global::System.DateTime startDate, global::System.DateTime endDate, global::System.String description, global::System.String createdBy, global::System.DateTime createdDate)
+        {
+            TaxProgressionGroup taxProgressionGroup = new TaxProgressionGroup();
+            taxProgressionGroup.Id = id;
+            taxProgressionGroup.RowVersion = rowVersion;
+            taxProgressionGroup.RowStatus = rowStatus;
+            taxProgressionGroup.StartDate = startDate;
+            taxProgressionGroup.EndDate = endDate;
+            taxProgressionGroup.Description = description;
+            taxProgressionGroup.CreatedBy = createdBy;
+            taxProgressionGroup.CreatedDate = createdDate;
+            return taxProgressionGroup;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Byte[] RowVersion
+        {
+            get
+            {
+                return StructuralObject.GetValidValue(_RowVersion);
+            }
+            set
+            {
+                OnRowVersionChanging(value);
+                ReportPropertyChanging("RowVersion");
+                _RowVersion = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("RowVersion");
+                OnRowVersionChanged();
+            }
+        }
+        private global::System.Byte[] _RowVersion;
+        partial void OnRowVersionChanging(global::System.Byte[] value);
+        partial void OnRowVersionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Byte RowStatus
+        {
+            get
+            {
+                return _RowStatus;
+            }
+            set
+            {
+                OnRowStatusChanging(value);
+                ReportPropertyChanging("RowStatus");
+                _RowStatus = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("RowStatus");
+                OnRowStatusChanged();
+            }
+        }
+        private global::System.Byte _RowStatus;
+        partial void OnRowStatusChanging(global::System.Byte value);
+        partial void OnRowStatusChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime StartDate
+        {
+            get
+            {
+                return _StartDate;
+            }
+            set
+            {
+                OnStartDateChanging(value);
+                ReportPropertyChanging("StartDate");
+                _StartDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("StartDate");
+                OnStartDateChanged();
+            }
+        }
+        private global::System.DateTime _StartDate;
+        partial void OnStartDateChanging(global::System.DateTime value);
+        partial void OnStartDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime EndDate
+        {
+            get
+            {
+                return _EndDate;
+            }
+            set
+            {
+                OnEndDateChanging(value);
+                ReportPropertyChanging("EndDate");
+                _EndDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EndDate");
+                OnEndDateChanged();
+            }
+        }
+        private global::System.DateTime _EndDate;
+        partial void OnEndDateChanging(global::System.DateTime value);
+        partial void OnEndDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Description
+        {
+            get
+            {
+                return _Description;
+            }
+            set
+            {
+                OnDescriptionChanging(value);
+                ReportPropertyChanging("Description");
+                _Description = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Description");
+                OnDescriptionChanged();
+            }
+        }
+        private global::System.String _Description;
+        partial void OnDescriptionChanging(global::System.String value);
+        partial void OnDescriptionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String CreatedBy
+        {
+            get
+            {
+                return _CreatedBy;
+            }
+            set
+            {
+                OnCreatedByChanging(value);
+                ReportPropertyChanging("CreatedBy");
+                _CreatedBy = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("CreatedBy");
+                OnCreatedByChanged();
+            }
+        }
+        private global::System.String _CreatedBy;
+        partial void OnCreatedByChanging(global::System.String value);
+        partial void OnCreatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime CreatedDate
+        {
+            get
+            {
+                return _CreatedDate;
+            }
+            set
+            {
+                OnCreatedDateChanging(value);
+                ReportPropertyChanging("CreatedDate");
+                _CreatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedDate");
+                OnCreatedDateChanged();
+            }
+        }
+        private global::System.DateTime _CreatedDate;
+        partial void OnCreatedDateChanging(global::System.DateTime value);
+        partial void OnCreatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ModifiedBy
+        {
+            get
+            {
+                return _ModifiedBy;
+            }
+            set
+            {
+                OnModifiedByChanging(value);
+                ReportPropertyChanging("ModifiedBy");
+                _ModifiedBy = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ModifiedBy");
+                OnModifiedByChanged();
+            }
+        }
+        private global::System.String _ModifiedBy;
+        partial void OnModifiedByChanging(global::System.String value);
+        partial void OnModifiedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> ModifiedDate
+        {
+            get
+            {
+                return _ModifiedDate;
+            }
+            set
+            {
+                OnModifiedDateChanging(value);
+                ReportPropertyChanging("ModifiedDate");
+                _ModifiedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ModifiedDate");
+                OnModifiedDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _ModifiedDate;
+        partial void OnModifiedDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnModifiedDateChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PayrollModel", "FK_TaxProgressionItem_TaxProgressionGroup", "TaxProgressionItem")]
+        public EntityCollection<TaxProgressionItem> TaxProgressionItems
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TaxProgressionItem>("PayrollModel.FK_TaxProgressionItem_TaxProgressionGroup", "TaxProgressionItem");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TaxProgressionItem>("PayrollModel.FK_TaxProgressionItem_TaxProgressionGroup", "TaxProgressionItem", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="PayrollModel", Name="TaxProgressionItem")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class TaxProgressionItem : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new TaxProgressionItem object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="rowVersion">Initial value of the RowVersion property.</param>
+        /// <param name="rowStatus">Initial value of the RowStatus property.</param>
+        /// <param name="taxProgressionGroupId">Initial value of the TaxProgressionGroupId property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
+        /// <param name="startValue">Initial value of the StartValue property.</param>
+        /// <param name="endValue">Initial value of the EndValue property.</param>
+        /// <param name="percentage">Initial value of the Percentage property.</param>
+        /// <param name="createdBy">Initial value of the CreatedBy property.</param>
+        /// <param name="createdDate">Initial value of the CreatedDate property.</param>
+        public static TaxProgressionItem CreateTaxProgressionItem(global::System.Int32 id, global::System.Byte[] rowVersion, global::System.Byte rowStatus, global::System.Int32 taxProgressionGroupId, global::System.String name, global::System.Decimal startValue, global::System.Decimal endValue, global::System.Decimal percentage, global::System.String createdBy, global::System.DateTime createdDate)
+        {
+            TaxProgressionItem taxProgressionItem = new TaxProgressionItem();
+            taxProgressionItem.Id = id;
+            taxProgressionItem.RowVersion = rowVersion;
+            taxProgressionItem.RowStatus = rowStatus;
+            taxProgressionItem.TaxProgressionGroupId = taxProgressionGroupId;
+            taxProgressionItem.Name = name;
+            taxProgressionItem.StartValue = startValue;
+            taxProgressionItem.EndValue = endValue;
+            taxProgressionItem.Percentage = percentage;
+            taxProgressionItem.CreatedBy = createdBy;
+            taxProgressionItem.CreatedDate = createdDate;
+            return taxProgressionItem;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Byte[] RowVersion
+        {
+            get
+            {
+                return StructuralObject.GetValidValue(_RowVersion);
+            }
+            set
+            {
+                OnRowVersionChanging(value);
+                ReportPropertyChanging("RowVersion");
+                _RowVersion = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("RowVersion");
+                OnRowVersionChanged();
+            }
+        }
+        private global::System.Byte[] _RowVersion;
+        partial void OnRowVersionChanging(global::System.Byte[] value);
+        partial void OnRowVersionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Byte RowStatus
+        {
+            get
+            {
+                return _RowStatus;
+            }
+            set
+            {
+                OnRowStatusChanging(value);
+                ReportPropertyChanging("RowStatus");
+                _RowStatus = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("RowStatus");
+                OnRowStatusChanged();
+            }
+        }
+        private global::System.Byte _RowStatus;
+        partial void OnRowStatusChanging(global::System.Byte value);
+        partial void OnRowStatusChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 TaxProgressionGroupId
+        {
+            get
+            {
+                return _TaxProgressionGroupId;
+            }
+            set
+            {
+                OnTaxProgressionGroupIdChanging(value);
+                ReportPropertyChanging("TaxProgressionGroupId");
+                _TaxProgressionGroupId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("TaxProgressionGroupId");
+                OnTaxProgressionGroupIdChanged();
+            }
+        }
+        private global::System.Int32 _TaxProgressionGroupId;
+        partial void OnTaxProgressionGroupIdChanging(global::System.Int32 value);
+        partial void OnTaxProgressionGroupIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal StartValue
+        {
+            get
+            {
+                return _StartValue;
+            }
+            set
+            {
+                OnStartValueChanging(value);
+                ReportPropertyChanging("StartValue");
+                _StartValue = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("StartValue");
+                OnStartValueChanged();
+            }
+        }
+        private global::System.Decimal _StartValue;
+        partial void OnStartValueChanging(global::System.Decimal value);
+        partial void OnStartValueChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal EndValue
+        {
+            get
+            {
+                return _EndValue;
+            }
+            set
+            {
+                OnEndValueChanging(value);
+                ReportPropertyChanging("EndValue");
+                _EndValue = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EndValue");
+                OnEndValueChanged();
+            }
+        }
+        private global::System.Decimal _EndValue;
+        partial void OnEndValueChanging(global::System.Decimal value);
+        partial void OnEndValueChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal Percentage
+        {
+            get
+            {
+                return _Percentage;
+            }
+            set
+            {
+                OnPercentageChanging(value);
+                ReportPropertyChanging("Percentage");
+                _Percentage = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Percentage");
+                OnPercentageChanged();
+            }
+        }
+        private global::System.Decimal _Percentage;
+        partial void OnPercentageChanging(global::System.Decimal value);
+        partial void OnPercentageChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String CreatedBy
+        {
+            get
+            {
+                return _CreatedBy;
+            }
+            set
+            {
+                OnCreatedByChanging(value);
+                ReportPropertyChanging("CreatedBy");
+                _CreatedBy = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("CreatedBy");
+                OnCreatedByChanged();
+            }
+        }
+        private global::System.String _CreatedBy;
+        partial void OnCreatedByChanging(global::System.String value);
+        partial void OnCreatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime CreatedDate
+        {
+            get
+            {
+                return _CreatedDate;
+            }
+            set
+            {
+                OnCreatedDateChanging(value);
+                ReportPropertyChanging("CreatedDate");
+                _CreatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedDate");
+                OnCreatedDateChanged();
+            }
+        }
+        private global::System.DateTime _CreatedDate;
+        partial void OnCreatedDateChanging(global::System.DateTime value);
+        partial void OnCreatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ModifiedBy
+        {
+            get
+            {
+                return _ModifiedBy;
+            }
+            set
+            {
+                OnModifiedByChanging(value);
+                ReportPropertyChanging("ModifiedBy");
+                _ModifiedBy = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ModifiedBy");
+                OnModifiedByChanged();
+            }
+        }
+        private global::System.String _ModifiedBy;
+        partial void OnModifiedByChanging(global::System.String value);
+        partial void OnModifiedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> ModifiedDate
+        {
+            get
+            {
+                return _ModifiedDate;
+            }
+            set
+            {
+                OnModifiedDateChanging(value);
+                ReportPropertyChanging("ModifiedDate");
+                _ModifiedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ModifiedDate");
+                OnModifiedDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _ModifiedDate;
+        partial void OnModifiedDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnModifiedDateChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PayrollModel", "FK_TaxProgressionItem_TaxProgressionGroup", "TaxProgressionGroup")]
+        public TaxProgressionGroup TaxProgressionGroup
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TaxProgressionGroup>("PayrollModel.FK_TaxProgressionItem_TaxProgressionGroup", "TaxProgressionGroup").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TaxProgressionGroup>("PayrollModel.FK_TaxProgressionItem_TaxProgressionGroup", "TaxProgressionGroup").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<TaxProgressionGroup> TaxProgressionGroupReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TaxProgressionGroup>("PayrollModel.FK_TaxProgressionItem_TaxProgressionGroup", "TaxProgressionGroup");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TaxProgressionGroup>("PayrollModel.FK_TaxProgressionItem_TaxProgressionGroup", "TaxProgressionGroup", value);
+                }
+            }
+        }
+
+        #endregion
+
     }
 
     #endregion
+
     
 }

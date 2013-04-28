@@ -21,6 +21,7 @@ namespace K.Common.UI.Forms
 
         protected byte DataStatus { get; set; }
         protected IMaintainData MaintainData { get; set; }
+        protected DateTime CurrentDate { get; set; }
 
         protected virtual void ButtonDeleteClick(object sender, EventArgs e)
         {
@@ -87,7 +88,7 @@ namespace K.Common.UI.Forms
 			//}
         }
 
-		protected virtual void ShowMessage(PayrollModuleCore dataManager)
+		protected virtual void ShowMessage(PayrollBaseCore dataManager)
 		{
 			MsgHelpers.ShowInfo(this, dataManager.Message);
 			Close();
