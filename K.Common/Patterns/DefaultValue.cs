@@ -4,7 +4,8 @@ namespace K.Common.Patterns
 {
     public static class DefaultValue
     {
-		public const string DEFAULT_NEW_LINE_WEB = "<br/>";
+        public const string AUTO_GENERATE_TEXT = @"Auto Generate";
+        public const string DEFAULT_NEW_LINE_WEB = "<br/>";
 		public const string DEFAULT_NEW_LINE_CONSOLE = "\n";
         public const string SQL_DATE_FORMAT = "yyyy-MM-dd hh:mm:ss";
         public const string DOT = ".";
@@ -15,6 +16,7 @@ namespace K.Common.Patterns
         public const string DEFAULT_EMPTY = "NONE";
         public const string FILE_UPLOAD_PATH = @"~\Upload\";
 		public const string COLUMN_ROW_STATUS = "RowStatus";
+        public const string CRUD_STATUS = "CrudStatusColumn";
         public static DateTime DefaultDate
         {
             get

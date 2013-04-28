@@ -55,6 +55,7 @@
     <Compile Include="Fault\NoAccessMethodException.cs" />
     <Compile Include="Patterns\AbstractCore.cs" />
     <Compile Include="Patterns\AbstractRepository.cs" />
+    <Compile Include="Patterns\BaseRepository.cs" />
     <Compile Include="Patterns\Dynamic.cs" />
     <Compile Include="Data\EnumParamterDataTypes.cs" />
     <Compile Include="Data\IDataManager.cs" />
