@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using K.Common;
-using K.Common.Data;
+﻿using System.Collections.Generic;
 using K.Common.Interfaces;
-using K.Common.Patterns;
 using K.HR.Payroll.DataRepository;
-using K.HR.Payroll.Model;
 using K.HR.Payroll.Model.Interfaces;
 
 namespace K.HR.Payroll.Core
 {
-	public class EmployeeModuleCore : PayrollModuleCore
+	public class EmployeeCore : PayrollBaseCore
 	{
 
-		public EmployeeModuleCore()
+		public EmployeeCore()
 		{
 			ObjectName = "Employee";
 		}
@@ -45,22 +40,20 @@ namespace K.HR.Payroll.Core
 			}
 		}
 
-		public IEnumerable<T> Get<T>(params IListParameter[] parameter)
+        public IEnumerable<T> Get<T>(params IListParameter[] parameter) where T : IEmployeeModel
 		{
 			using (Repository = new EmployeeRepository())
 			{
-				var data = Repository.Get(parameter);
-				return data as IEnumerable<T>;
-
+				return Repository.Get<T>(parameter);
 			}
 		}
 
-		public override IEnumerable<T> Get<T>(int start, int limit, string sort, string dir, out int totalCount, params IListParameter[] parameter)
+		public override IEnumerable<T> Get<T>(int start, int limit, string sort, string dir, out int totalCount, params IListParameter[] parameter)  
 		{
 			using (Repository = new EmployeeRepository())
 			{
-				var data = Repository.Get(start, limit, sort, dir, out totalCount, parameter);
-				return data as IEnumerable<T>;
+				var data = Repository.Get<IEmployeeModel>(start, limit, sort, dir, out totalCount, parameter);
+				return (IEnumerable<T>) data;
 
 			}
 		}

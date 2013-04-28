@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using K.Common;
-using K.Common.Data;
+﻿using System.Collections.Generic;
 using K.Common.Interfaces;
-using K.Common.Patterns;
 using K.HR.Payroll.DataRepository;
-using K.HR.Payroll.Model;
 using K.HR.Payroll.Model.Interfaces;
 
 namespace K.HR.Payroll.Core
 {
-    public class PayrollItemModuleCore : PayrollModuleCore
+    public class PayrollItemModuleCore : PayrollBaseCore
     {
         public PayrollItemModuleCore()
         {
@@ -46,12 +39,12 @@ namespace K.HR.Payroll.Core
 			}
         }
 
-		public IEnumerable<T> Get<T>(params IListParameter[] parameter)
+		public IEnumerable<T> Get<T>(params IListParameter[] parameter) where T : IPayrollItemModel
         {
 			using (Repository = new PayrollItemRepository())
 			{
-				var data = Repository.Get(parameter);
-				return data as IEnumerable<T>;
+				var data = Repository.Get<T>(parameter);
+				return data;
 			}
         }
 
@@ -59,7 +52,7 @@ namespace K.HR.Payroll.Core
         {
 			using (Repository = new PayrollItemRepository())
 			{
-				var data = Repository.Get(start, limit, sort, dir, out totalCount, parameter);
+				var data = Repository.Get<IPayrollItemModel>(start, limit, sort, dir, out totalCount, parameter);
 				return data as IEnumerable<T>;
 			}
         }

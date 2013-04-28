@@ -49,9 +49,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PayrollModuleCore.cs" />
-    <Compile Include="EmployeeModuleCore.cs" />
-    <Compile Include="PayrollGroupModuleCore.cs" />
+    <Compile Include="PayrollCore.cs" />
+    <Compile Include="PayrollBaseCore.cs" />
+    <Compile Include="EmployeeCore.cs" />
+    <Compile Include="PayrollGroupCore.cs" />
     <Compile Include="PayrollItem.cs" />
     <Compile Include="PositionModuleCore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
